@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+<ItemGroup>
+
+  <Reference Include="RevitAPI, Version=18.0.0.0, Culture=neutral, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'RV2018Debug' OR '$(Configuration)' == 'RV2018Release' OR '$(Configuration)' == 'RV2018DBDebug' OR '$(Configuration)' == 'RV2018DBRelease'">
+    <HintPath>C:\Program Files\Autodesk\Revit 2018\RevitAPI.dll</HintPath>
+    <Private>False</Private>
+  </Reference>
+
+  <Reference Include="RevitAPIUI, Version=18.0.0.0, Culture=neutral, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'RV2018Debug' OR '$(Configuration)' == 'RV2018Release'">
+    <HintPath>C:\Program Files\Autodesk\Revit 2018\RevitAPIUI.dll</HintPath>
+    <Private>False</Private>
+  </Reference>
+
+
+  <Reference Include="RevitAPI, Version=19.0.0.0, Culture=neutral, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'RV2019Debug' OR '$(Configuration)' == 'RV2019Release' OR '$(Configuration)' == 'RV2019DBDebug' OR '$(Configuration)' == 'RV2019DBRelease'">
+    <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
+    <Private>False</Private>
+  </Reference>
+  
+  <Reference Include="RevitAPIUI, Version=19.0.0.0, Culture=neutral, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'RV2019Debug' OR '$(Configuration)' == 'RV2019Release'">
+    <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
+    <Private>False</Private>
+  </Reference>
+
+
+  <Reference Include="RevitAPI, Version=20.0.0.0, Culture=neutral, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'RV2020Debug' OR '$(Configuration)' == 'RV2020Release' OR '$(Configuration)' == 'RV2020DBDebug' OR '$(Configuration)' == 'RV2020DBRelease'">
+    <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
+    <Private>False</Private>
+  </Reference>
+
+  <Reference Include="RevitAPIUI, Version=20.0.0.0, Culture=neutral, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'RV2020Debug' OR '$(Configuration)' == 'RV2020Release'">
+    <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
+    <Private>False</Private>
+  </Reference>
+  
+  </ItemGroup>
+
+</Project>

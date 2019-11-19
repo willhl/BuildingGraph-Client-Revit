@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>59589e76-d411-4579-810d-a08074e453e7</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>HLApps.RevitBuildConfigurations</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)BuildConfigurations.targets" />
+    <None Include="$(MSBuildThisFileDirectory)Imports.targets" />
+    <None Include="$(MSBuildThisFileDirectory)LocalDebugAddin.targets" />
+  </ItemGroup>
+</Project>

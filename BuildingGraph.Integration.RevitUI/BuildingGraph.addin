@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>Revit To Graph</Name>
+    <Assembly>BuildingGraph\BuildingGraph.Integration.RevitUI.dll</Assembly>
+    <AddInId>5EE88C10-F682-4A48-8975-CB5652917F6B</AddInId>
+    <FullClassName>BuildingGraph.Integrations.Revit.UIAddin.GraphApp</FullClassName>
+    <VendorId>HLEA</VendorId>
+    <VendorDescription>Will Reynolds @ Hoare Lea</VendorDescription>
+  </AddIn>
+</RevitAddIns>

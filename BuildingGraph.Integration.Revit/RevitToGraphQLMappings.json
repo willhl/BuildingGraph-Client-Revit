@@ -1,0 +1,71 @@
+﻿{
+  "Types": {
+    "LengthUnits": {
+      "Kind": "ENUM",
+      "NativeType": "Autodesk.Revit.DB.DisplayUnitType",
+      "Mappings": {
+        "ft": "DUT_DECIMAL_FEET",
+        "in": "DUT_DECIMAL_INCHES",
+        "m": "DUT_METERS",
+        "mm": "DUT_MILLIMETERS",
+        "cm": "DUT_CENTIMETERS"
+      }
+
+    },
+    "AreaUnits": {
+      "Kind": "ENUM",
+      "NativeType": "Autodesk.Revit.DB.DisplayUnitType",
+      "Mappings": {
+        "mm2": "DUT_SQUARE_METERS",
+        "ft2": "DUT_SQUARE_FEET"
+      }
+
+    },
+    "VolumeUnits": {
+      "Kind": "ENUM",
+      "NativeType": "Autodesk.Revit.DB.DisplayUnitType",
+      "Mappings": {
+        "mm3": "DUT_CUBIC_METERS",
+        "ft3": "DUT_CUBIC_FEET"
+      }
+
+    },
+    "CurrentUnits": {
+      "Kind": "ENUM",
+      "NativeType": "Autodesk.Revit.DB.DisplayUnitType",
+      "Mappings": {
+        "A": "DUT_AMPERES",
+        "mA": "DUT_MILLIAMPERES",
+        "kA": "DUT_KILOAMPERES"
+      }
+
+    },
+    "VoltageUnits": {
+      "Kind": "ENUM",
+      "NativeType": "Autodesk.Revit.DB.DisplayUnitType, RevitAPI",
+      "Mappings": {
+        "V": "DUT_VOLTS",
+        "mV": "DUT_MILLIVOLTS",
+        "kV": "DUT_KILOVOLTS"
+      }
+
+    },
+    "PowerUnits": {
+      "Kind": "ENUM",
+      "NativeType": "Autodesk.Revit.DB.DisplayUnitType",
+      "Mappings": {
+        "W": "DUT_WATTS",
+        "kW": "DUT_KILOWATTS"
+      }
+
+    },
+    "Space": {
+      "Kind": "OBJECT",
+      "NativeType": "Autodesk.Revit.DB.Space",
+      "Create": "CreateSpace",
+      "Delete": "DeleteSpace",
+      "Update": "UpdateSpace",
+      "Mappings": {}
+    }
+  }
+}

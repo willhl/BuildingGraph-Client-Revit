@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F5FECC1A-9803-43EA-A217-E9D321A7C2D2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BuildingGraph.Integration.Revit.UIaddin</RootNamespace>
+    <AssemblyName>HLApps.Revit.Graph.UIAddin</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <Import Project="..\BuildConfigurations\BuildConfigurations.targets" />
+  <Import Project="..\BuildConfigurations\Imports.targets" />
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GraphApp.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GraphAppShowCommand.cs" />
+    <Compile Include="RevitGraphSyncCommand.cs" />
+    <Compile Include="UI\GraphAppWindow.xaml.cs">
+      <DependentUpon>GraphAppWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ViewModel\BaseViewModel.cs" />
+    <Compile Include="UI\ViewModel\Command.cs" />
+    <Compile Include="UI\ViewModel\GraphAppViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="BuildingGraph.addin" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BuildingGraph.Client\BuildingGraph.Client.csproj">
+      <Project>{6217d742-11dc-40d1-8125-d2b98414be03}</Project>
+      <Name>BuildingGraph.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuildingGraph.Client.Neo4j\BuildingGraph.Client.Neo4j.csproj">
+      <Project>{400e1964-b716-4ea4-b21e-15c1f2135888}</Project>
+      <Name>BuildingGraph.Client.Neo4j</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuildingGraph.Integration.Revit\BuildingGraph.Integration.Revit.csproj">
+      <Project>{93280ff6-c2cc-4ece-8c26-d6794f7121d3}</Project>
+      <Name>BuildingGraph.Integration.Revit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Page Include="UI\GraphAppWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\BuildConfigurations\LocalDebugAddin.targets" />
+</Project>
