@@ -2,7 +2,7 @@
 
 GraphData-MEP is a C# .NET addin for Revit.
 
-It extracts Spaces, Mechanical, Electrical and Plumbing systems from a Revit model and publishes them to a Graph Database. The current implementation supports writing to a Neo4j graph database.
+It extracts Spaces, Mechanical, Electrical and Plumbing systems from a Revit model and publishes them to a Graph Database. The current implementation supports writing to a Neo4j graph database using the bolt protocol.
 
 
   - Publishes all ducts, pipes, cables trays and electrical circuits and their connections.
@@ -26,13 +26,13 @@ Once up and running point your browser at the IP or host name used by docker and
 ## Building and Installation
 ---
 
-Fork then clone this repository to your local system, then open RevitToGraphDB.sln in Visual Studio.
+Fork then clone this repository to your local system, then open BuildingGraph.sln in Visual Studio.
 
-There should be no installation steps required as the Visual Studio solution is pre-configured to build and debug for Revit 2018 or 2019. Just set HLApps.Revit.Graph.UIAddin as the startup project and set the solution configuration to either Debug2018 (for Revit 2018) or Debug2019 (for Revit 2019), and hit Run.
+There should be no installation steps required as the Visual Studio solution is pre-configured to build and debug for Revit 2018 or 2019. Just set BuildingGraph.Integration.RevitUI as the startup project and set the solution configuration to Debug201x and x64, and hit Run.
 
-It assumes you have Revit 2018 and/or 2019 installed, and the Revit API assemblies are in "C:\Program Files\Autodesk\Revit 201x", if this is not the case on your system you may need to edit HLApps.RevitBuildConfigurations\Imports.targets with the location of your Revit API assemblies.
+It assumes you have Revit installed, and the Revit API assemblies are in "C:\Program Files\Autodesk\Revit 201x", if this is not the case on your system you may need to edit BuildConfigurations\Imports.targets with the location of your Revit API assemblies.
 
-The post build events will copy the .addin manifest and built assemblies to your Revit addins folder, again if this is not "C:\ProgramData\Autodesk\Revit\Addins\201x" you can edit HLApps.RevitBuildConfigurations\LocalDebugAddin.targets with the correct addins location for your system.
+The post build events will copy the .addin manifest and built assemblies to your Revit addins folder, again if this is not "C:\ProgramData\Autodesk\Revit\Addins\201x" you can edit BuildConfigurations\LocalDebugAddin.targets with the correct addins location for your system.
 
 ## Example Graph Data Queries
 ---
