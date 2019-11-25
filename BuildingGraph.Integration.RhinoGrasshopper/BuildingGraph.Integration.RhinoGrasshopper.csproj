@@ -7,8 +7,8 @@
     <ProjectGuid>{3DB3BD80-74D4-4523-A201-C3CE20D855E8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildingGraph.Client.RhinoGrasshopper</RootNamespace>
-    <AssemblyName>BuildingGraph.Client.RhinoGrasshopper</AssemblyName>
+    <RootNamespace>BuildingGraph.Integration.RhinoGrasshopper</RootNamespace>
+    <AssemblyName>BuildingGraph.Integration.RhinoGrasshopper</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

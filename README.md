@@ -1,6 +1,17 @@
-# GraphData-MEP
+# BuildingGraph-Client-Revit
 
-GraphData-MEP is a C# .NET addin for Revit.
+BuildingGraph.Client is a C# GraphQL client for https://github.com/willhl/BuildingGraph-Server.
+
+In addition to the Revit addin there're also BuildingGraph integration nodes for Dynamo and Grasshopper:
+ - BuildingGraph.Integration.RhinoGrasshopper
+ - BuildingGraph.Integration.Dynamo
+
+ These two and sitting here for now but are planned to be migrated out of this repository.
+
+
+# BuildingGraph.Integration.RevitUI
+
+BuildingGraph.Integration.RevitUI is a C# .NET addin for Revit.
 
 It extracts Spaces, Mechanical, Electrical and Plumbing systems from a Revit model and publishes them to a Graph Database. The current implementation supports writing to a Neo4j graph database using the bolt protocol.
 
@@ -26,7 +37,7 @@ Once up and running point your browser at the IP or host name used by docker and
 ## Building and Installation
 ---
 
-Fork then clone this repository to your local system, then open BuildingGraph.sln in Visual Studio.
+Clone this repository to your local system, then open BuildingGraph.sln in Visual Studio.
 
 There should be no installation steps required as the Visual Studio solution is pre-configured to build and debug for Revit 2018 or 2019. Just set BuildingGraph.Integration.RevitUI as the startup project and set the solution configuration to Debug201x and x64, and hit Run.
 

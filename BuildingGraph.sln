@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingGraph.Client", "Bui
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingGraph.Client.Tests", "BuildingGraph.Client.Tests\BuildingGraph.Client.Tests.csproj", "{F365CBD0-8FC4-4706-837D-928FDA741A35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingGraph.Integration.RhinoGrasshopper", "BuildingGraph.Client.RhinoGrasshopper\BuildingGraph.Integration.RhinoGrasshopper.csproj", "{3DB3BD80-74D4-4523-A201-C3CE20D855E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingGraph.Integration.RhinoGrasshopper", "BuildingGraph.Integration.RhinoGrasshopper\BuildingGraph.Integration.RhinoGrasshopper.csproj", "{3DB3BD80-74D4-4523-A201-C3CE20D855E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingGraph.Integration.Dynamo", "BuildingGraph.Integration.Dynamo\BuildingGraph.Integration.Dynamo.csproj", "{86A8B497-BD80-4123-8C03-3468BDBCA2A9}"
 EndProject
@@ -24,17 +24,11 @@ Global
 		BuildConfigurations\RevitBuildConfigurations.projitems*{59589e76-d411-4579-810d-a08074e453e7}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug2018|Any CPU = Debug2018|Any CPU
 		Debug2018|x64 = Debug2018|x64
-		Debug2019|Any CPU = Debug2019|Any CPU
 		Debug2019|x64 = Debug2019|x64
-		Debug2020|Any CPU = Debug2020|Any CPU
 		Debug2020|x64 = Debug2020|x64
-		Release2018|Any CPU = Release2018|Any CPU
 		Release2018|x64 = Release2018|x64
-		Release2019|Any CPU = Release2019|Any CPU
 		Release2019|x64 = Release2019|x64
-		Release2020|Any CPU = Release2020|Any CPU
 		Release2020|x64 = Release2020|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
