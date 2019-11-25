@@ -1,4 +1,4 @@
-﻿using HLApps.Cloud.BuildingGraph;
+﻿using BuildingGraph.Client;
 using System.Collections.Generic;
 
 public class BuildingGraphAPIClient

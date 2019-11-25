@@ -31,7 +31,7 @@ namespace BuildingGraph.Client.RhinoGrasshopper
                 if (!string.IsNullOrEmpty(name) && !inputVariables.ContainsKey(name))
                 {
                     var value = ToGraphQLCompatibleValue(variableValues[varIdx]);
-                    var qlname = HLApps.MEPGraph.Utils.GetGraphQLCompatibleFieldName(name);
+                    var qlname = Client.Utils.GetGraphQLCompatibleFieldName(name);
                     inputVariables.Add(qlname, value);
                 }
             }

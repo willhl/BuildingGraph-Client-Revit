@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
-using HLApps.Cloud.BuildingGraph;
+using BuildingGraph.Client;
 
 namespace BuildingGraph.Client.RhinoGrasshopper
 {

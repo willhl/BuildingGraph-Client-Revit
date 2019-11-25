@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
-using HLApps.Cloud.BuildingGraph;
 
 namespace BuildingGraph.Client.RhinoGrasshopper
 {

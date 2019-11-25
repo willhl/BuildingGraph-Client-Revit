@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
-using HLApps.Cloud.BuildingGraph;
 
 namespace BuildingGraph.Client.RhinoGrasshopper
 {
@@ -63,8 +62,8 @@ namespace BuildingGraph.Client.RhinoGrasshopper
 
             if (_client == null) _client = new BuildingGraphClient(endpoint);
 
-            var fromPn = new HLApps.MEPGraph.PendingNode(fromElmName, fromElmId);
-            var toPn = new HLApps.MEPGraph.PendingNode(toElmName, toElmId);
+            var fromPn = new PendingNode(fromElmName, fromElmId);
+            var toPn = new PendingNode(toElmName, toElmId);
 
             //variables in relationships not supported yet
             _client.Relate(fromPn, toPn, relName, null);

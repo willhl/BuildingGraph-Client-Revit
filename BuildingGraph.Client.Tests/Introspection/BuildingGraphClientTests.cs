@@ -25,7 +25,7 @@ namespace BuildingGraph.Client.Tests
             var eleQuery = @"query ($projectName:String, $buidingName: String, $rootDbName: String) {
   Space(filter: {BaseLevel: {Building: {Name: $buidingName, Projects_some: {Name: $projectName}}}}) {
     Id
-    Name
+    Name    
     Number
     Number_of_230V_Single_Sockets_Non_Essential
     Number_of_230V_Twin_Sockets_Non_Essential
