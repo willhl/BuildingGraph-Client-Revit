@@ -1,0 +1,3 @@
+[submodule "BuildingGraph-Client"]
+	path = BuildingGraph-Client
+	url = https://github.com/willhl/BuildingGraph-Client.git
