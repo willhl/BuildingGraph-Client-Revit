@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Revit.DB;
-using BuildingGraph.Client;
+using BuildingGraph.Client.Neo4j;
 
 namespace BuildingGraph.Integrations.Revit
 {
@@ -16,7 +16,7 @@ namespace BuildingGraph.Integrations.Revit
             _rdoc = doc;
         }
 
-        public void Publish(RevitToGraphPublisherSettings settings, IGraphDBClient client)
+        public void Publish(RevitToGraphPublisherSettings settings, Neo4jClient client)
         {
             var meGraph = new MEPRevitGraph();
             MEPRevitGraphWriter mps = new MEPRevitGraphWriter(meGraph);

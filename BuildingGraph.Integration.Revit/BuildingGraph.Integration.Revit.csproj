@@ -16,6 +16,9 @@
   <Import Project="..\BuildConfigurations\BuildConfigurations.targets" />
   <Import Project="..\BuildConfigurations\Imports.targets" />
   <ItemGroup>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Nito.AsyncEx.Context, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nito.AsyncEx.Context.5.0.0\lib\netstandard2.0\Nito.AsyncEx.Context.dll</HintPath>
     </Reference>
@@ -39,6 +42,9 @@
     </Reference>
     <Reference Include="Nito.Disposables, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nito.Disposables.2.0.0\lib\netstandard2.0\Nito.Disposables.dll</HintPath>
+    </Reference>
+    <Reference Include="RevitAPI.20.0.0.0.Fakes">
+      <HintPath>FakesAssemblies\RevitAPI.20.0.0.0.Fakes.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.2.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -102,20 +108,24 @@
     <Compile Include="Utils\RevitElementExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuildingGraph.Client\BuildingGraph.Client.csproj">
-      <Project>{6217d742-11dc-40d1-8125-d2b98414be03}</Project>
-      <Name>BuildingGraph.Client</Name>
+    <None Include="app.config" />
+    <Fakes Include="Fakes\RevitAPI.fakes" />
+    <None Include="packages.config" />
+    <None Include="RevitToGraphQLMappings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BuildingGraph-Client\BuildingGraph.Client.Core\BuildingGraph.Client.Core.csproj">
+      <Project>{79e4ed3b-5594-466d-89f9-18d2f00a547e}</Project>
+      <Name>BuildingGraph.Client.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BuildingGraph.Client.Neo4j\BuildingGraph.Client.Neo4j.csproj">
+    <ProjectReference Include="..\BuildingGraph-Client\BuildingGraph.Client.GraphQL\BuildingGraph.Client.GraphQL.csproj">
+      <Project>{6217d742-11dc-40d1-8125-d2b98414be03}</Project>
+      <Name>BuildingGraph.Client.GraphQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuildingGraph-Client\BuildingGraph.Client.Neo4j\BuildingGraph.Client.Neo4j.csproj">
       <Project>{400e1964-b716-4ea4-b21e-15c1f2135888}</Project>
       <Name>BuildingGraph.Client.Neo4j</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-    <None Include="RevitToGraphQLMappings.json" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

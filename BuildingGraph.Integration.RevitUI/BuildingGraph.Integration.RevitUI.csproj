@@ -46,11 +46,11 @@
     <None Include="BuildingGraph.addin" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuildingGraph.Client\BuildingGraph.Client.csproj">
+    <ProjectReference Include="..\BuildingGraph-Client\BuildingGraph.Client.GraphQL\BuildingGraph.Client.GraphQL.csproj">
       <Project>{6217d742-11dc-40d1-8125-d2b98414be03}</Project>
-      <Name>BuildingGraph.Client</Name>
+      <Name>BuildingGraph.Client.GraphQL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BuildingGraph.Client.Neo4j\BuildingGraph.Client.Neo4j.csproj">
+    <ProjectReference Include="..\BuildingGraph-Client\BuildingGraph.Client.Neo4j\BuildingGraph.Client.Neo4j.csproj">
       <Project>{400e1964-b716-4ea4-b21e-15c1f2135888}</Project>
       <Name>BuildingGraph.Client.Neo4j</Name>
     </ProjectReference>
