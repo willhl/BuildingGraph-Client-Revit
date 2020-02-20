@@ -1,32 +1,27 @@
+
 # BuildingGraph-Client-Revit
 
-BuildingGraph.Client is a C# GraphQL client for https://github.com/willhl/BuildingGraph-Server.
+BuildingGraph-Client-Revit is a C# client for Revit and Dynamo to publish Revit models to a Neo4j database. Integrations included in this repository:
 
-In addition to the Revit addin there're also BuildingGraph integration nodes for Dynamo and Grasshopper:
- - BuildingGraph.Integration.RhinoGrasshopper
- - BuildingGraph.Integration.Dynamo
+ - Revit > Neo4j (bolt)
+ - Dynamo <> Building Graph Server (GraphQL)
+ - WIP: Revit <> Building Graph Server (GraphQL)
 
- These two and sitting here for now but are planned to be migrated out of this repository.
+Also included in other repositories:
+[BuildingGraph-Integration-RhinoGrasshopper](https://github.com/willhl/BuildingGraph-Integration-RhinoGrasshopper)
+ - Rhino Grasshopper <> Neo4j (bolt)
+ - Rhino Grasshopper <> Building Graph Server (GraphQL)
+
+All of these repositories include dependencies to the core client libraries for Neo4j and GraphQL: 
+[BuildingGraph-Client](https://github.com/willhl/BuildingGraph-Client)
 
 
-# BuildingGraph.Integration.RevitUI
+## Firstly, you'll need a Neo4j Database
 
-BuildingGraph.Integration.RevitUI is a C# .NET addin for Revit.
-
-It extracts Spaces, Mechanical, Electrical and Plumbing systems from a Revit model and publishes them to a Graph Database. The current implementation supports writing to a Neo4j graph database using the bolt protocol.
-
-
-  - Publishes all ducts, pipes, cables trays and electrical circuits and their connections.
-  - Includes all Revit element parameter values on their respective Nodes and Edges.
-  - Includes relationships to levels, spaces, systems and element types.
-  - Simplified space bounding surface geometry feature extraction (currently only area and facing vector).
-
-## Graph Database
----
-You'll need access to a Neo4j database. There are various options for this, for local development a docker image works well. If you're using docker use these command to quickly get up and running:
+ There are various options for this, for local development a docker image works well. If you're using docker use these command to quickly get up and running:
    
-    docker pull neo4j:latest
-    docker run -p 7474:7474 -p 7687:7687 -p 7473:7473  neo4j:latest
+    docker pull neo4j:4.0
+    docker run -p 7474:7474 -p 7687:7687 -p 7473:7473  neo4j:4.0
 
 This will start the latest community version of Neo4j in a new container, note that once this container is deleted the database will be lost as well. To persist data over container instances refer to the full documentation on running Neo4j in docker: https://neo4j.com/developer/docker/.
 
@@ -34,20 +29,39 @@ If you're not using docker have a look at https://neo4j.com/product/ for other i
 
 Once up and running point your browser at the IP or host name used by docker and the configured http/https port (usually 7474 or 7473, e.g. https://localhost:7473), here you can access the Neo4j Browser to configure the database username and password.
 
+# Using the Revit <> Neo4j (bolt) Integration
+
+BuildingGraph.Integration.RevitUI a C# .NET addin for Revit that extracts Spaces, Mechanical, Electrical and Plumbing systems from a Revit model and publishes them to a Graph Database. The current implementation supports writing to a Neo4j graph database using the bolt protocol.
+
+  - Publishes all ducts, pipes, cables trays and electrical circuits and their connections.
+  - Includes all Revit element parameter values on their respective Nodes and Edges.
+  - Includes relationships to levels, spaces, systems and element types.
+  - Simplified space bounding surface geometry feature extraction (currently only area and facing vector).
+
+
 ## Building and Installation
----
 
-Clone this repository to your local system, then open BuildingGraph.sln in Visual Studio.
+Clone this repository to your local system (including submodules): 
 
-There should be no installation steps required as the Visual Studio solution is pre-configured to build and debug for Revit 2018 or 2019. Just set BuildingGraph.Integration.RevitUI as the startup project and set the solution configuration to Debug201x and x64, and hit Run.
+    $ git clone --recurse-submodules https://github.com/willhl/BuildingGraph-Client-Revit.git
 
-It assumes you have Revit installed, and the Revit API assemblies are in "C:\Program Files\Autodesk\Revit 201x", if this is not the case on your system you may need to edit BuildConfigurations\Imports.targets with the location of your Revit API assemblies.
+Or, if you have already cloned this repository, you can grab the submodules with this command:
 
-The post build events will copy the .addin manifest and built assemblies to your Revit addins folder, again if this is not "C:\ProgramData\Autodesk\Revit\Addins\201x" you can edit BuildConfigurations\LocalDebugAddin.targets with the correct addins location for your system.
+    $ git submodule update --init --recursive
+
+Then open BuildingGraph.Integration.Revit.sln in Visual Studio. Just set BuildingGraph.Integration.RevitUI as the startup project and set the solution configuration to Debug201x and x64, and hit Run. This will build the projects, copy the .addin file to the Revit plugins directory and open Revit.
+
+It assumes you have Revit installed, and the Revit API assemblies are in "C:\Program Files\Autodesk\Revit 20xx", if this is not the case on your system you may need to edit BuildConfigurations\Imports.targets with the location of your Revit API assemblies.
+
+The post build events will copy the .addin manifest and built assemblies to your Revit addins folder, again if this is not "C:\ProgramData\Autodesk\Revit\Addins\20xx" you can edit BuildConfigurations\LocalDebugAddin.targets with the correct addins location for your system.
+
+### Publishing Revit models to Neo4j
+
+Following the above steps there should be a "HL Apps" panel in the Revit Add-ins ribbon tab. Select HLApps >  "Publish to graph", here you can enter the host name, port and credentials for your Neo4j database. Select the parse options you need then hit "publish" to push your model to the graph database, then you can begin you exploration into the graph.
+
 
 ## Example Graph Data Queries
----
-Here are some example cypher queries you can run against your graph data once succesfully published from Revit. Some of these examples use a filter for the space number, you'll need to change these values to actual spaces in your model.
+Here are some example Cypher queries you can run against your graph data once successfully published from Revit. Some of these examples use a filter for the space number, you'll need to change these values to actual spaces in your model.
 
 ### Electrical
 Find all DB Panels and Circuits:
@@ -120,8 +134,7 @@ To calculate fabric heat loss through all surfaces run the following scripts in 
 
     MATCH (s:Section)<-[r:BOUNDED_BY]-(sp:Space) where EXISTS (s.DesignTempDelta) RETURN sp.Name as Name, sum(s.FabricLoss) ORDER BY Name
 
-## Cypher to Power BI
----
+## Cypher Query to Power BI
 Open CypherToPowerBI.pbix, or, use the following Power Query (paste into the Advanced Editor window) to create a table in Power BI from a cypher query:
 
     let
@@ -154,23 +167,23 @@ These are the parameters for the power query:
  - CypherQuery = The cypher query (must return fields only, and not nodes)
 
 ## Todo
----
+
 This sample is not a complete implementation and there are many opportunities for improvement. 
 
 ### MEP
  - Use MEPSection data for more accurate lengths, and inclusion of other calculation data such as reynolds numbers.
- - Store parameter data in the graph with the same untis as the Revit model settings.
+ - Store parameter data in the graph with the same units as the Revit model settings.
 
 ### Geometry
  - Remove duplicate surfaces, currently surfaces are created for both directions between spaces.
  - Optimise the geometry extraction algorithm (large Revit models can take a very long time to process)
- - Include more geometric data, such as overall width, hight, maybe even a polygon of the outline shape.
+ - Include more geometric data, such as overall width, height, maybe even a polygon of the outline shape.
  - Make use of native geometric data types of the graph database
 
 ### Graph
  - Read data back from the graph database and update Revit model parameters.
  - Allow for versioning when publishing multiple versions of the same model, currently each publish creates a new graph (no merge yet).
- - Optimise the graph write stage, currently every single node and relatonship change is a single transaction.
+ - Optimise the graph write stage, currently every single node and relationship change is a single transaction.
 
 ### General
  - Add progress bars to inform status of long running processes
@@ -178,6 +191,28 @@ This sample is not a complete implementation and there are many opportunities fo
  - Error handling and logging
  - Set window owner to Revit window handle
 
+
+# Using the Dynamo <> Building Graph Server (GraphQL) Integration
+
+BuildingGraph.Integration.Dynamo C# .NET ZeroTouch  package for Dynamo Sandbox and Dynamo Revit. It provides the following nodes:
+
+ - Building Graph Client - Use this to provide the url to your GraphQL API
+ - Queries.BGGraphQLQuery - Use this to supply queries to the Buidling Graph Client
+ - BGNode.FromNameAndId - Use this to initially create a node with a given Name and/or Id
+ - Mutations.CreateNode - Use this to push your node to the database together with it parameters
+ - Mutations.UpdateNode - Use this to update the parameters on a node
+ - Mutations.RelateNode- Use this to relate two nodes together
+
+For example Dynamo graphs using these node see the [ examples repository.](https://github.com/willhl/BuildingGraph-Client-Examples)
+
+## Building and Installation
+
+Follow the steps in the above "Using the Revit <> Neo4j (bolt) Integration" section to clone the repository and open the solution file.  
+
+  1. Build the BuildingGraph.Integration.Dynamo project
+  2. In Dynamo (Sandbox or Revit), goto File > Import Library
+  3. Find the project build directory (usually BuildingGraph-Client-Revit\BuildingGraph.Integration.Dynamo\bin\Debug) and select BuildingGraph.Integration.Dynamo.dll
+
+
 # Licence
-___
-This sample is licensed under the terms of the MIT License. Please see the LICENSE file for full details.
+This code is licensed under the terms of the MIT License. Please see the LICENSE file for full details.

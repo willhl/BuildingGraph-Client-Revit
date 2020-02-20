@@ -3,14 +3,15 @@ using System.Linq;
 
 using HLApps.Revit.Utils;
 using BuildingGraph.Client;
+using BuildingGraph.Client.Neo4j;
 using Model = BuildingGraph.Client.Model;
 
 namespace BuildingGraph.Integrations.Revit
 {
     public class MEPGraphWriter : IMEPGraphWriter
     {
-        IGraphDBClient _gdbClient;
-        public MEPGraphWriter(IGraphDBClient gdbClient )
+        Neo4jClient _gdbClient;
+        public MEPGraphWriter(Neo4jClient gdbClient )
         {
             _gdbClient = gdbClient;
         }
@@ -65,7 +66,7 @@ namespace BuildingGraph.Integrations.Revit
                     var elmid = _gdbClient.Push(elmNode, elmParms);
 
                     //relate the element node to the abstracted model node
-                    _gdbClient.Relate(atid, elmid, Model.MEPEdgeTypes.REALIZED_BY, null);
+                    _gdbClient.Relate(atid, elmid, Model.MEPEdgeTypes.REALIZED_BY.ToString(), null);
 
 
                     PendingNode modelId = null;
@@ -92,7 +93,7 @@ namespace BuildingGraph.Integrations.Revit
 
                     var elmedgeProps = MEPGraphUtils.GetEdgeProps(elm);
                     //connect up model node to element node
-                    _gdbClient.Relate(elmid, modelId, Model.MEPEdgeTypes.IS_IN, elmedgeProps);
+                    _gdbClient.Relate(elmid, modelId, Model.MEPEdgeTypes.IS_IN.ToString(), elmedgeProps);
 
                     Autodesk.Revit.DB.Element typeElm = null;
 
@@ -128,14 +129,14 @@ namespace BuildingGraph.Integrations.Revit
                             var tsprops2 = MEPGraphUtils.GetNodePropsWithElementProps(tsNode, typeElm);
                             var tselmId = _gdbClient.Push(tselmNode, tsprops2);
 
-                            _gdbClient.Relate(tsId, tselmId, Model.MEPEdgeTypes.REALIZED_BY, exprops);
-                            _gdbClient.Relate(tselmId, modelId, Model.MEPEdgeTypes.IS_IN, edgeProps);
+                            _gdbClient.Relate(tsId, tselmId, Model.MEPEdgeTypes.REALIZED_BY.ToString(), exprops);
+                            _gdbClient.Relate(tselmId, modelId, Model.MEPEdgeTypes.IS_IN.ToString(), edgeProps);
                         }
                         else
                         {
                             tsId = types[typeElm.UniqueId];
                         }
-                        _gdbClient.Relate(atid, tsId, Model.MEPEdgeTypes.IS_OF, exprops);
+                        _gdbClient.Relate(atid, tsId, Model.MEPEdgeTypes.IS_OF.ToString(), exprops);
 
                     }
 
@@ -152,14 +153,14 @@ namespace BuildingGraph.Integrations.Revit
                             var lvlprops = MEPGraphUtils.GetNodePropsWithElementProps(lvlNode, lvl);
                             lvlId = _gdbClient.Push(lvlNode, lvlprops);
                             levels.Add(lvl.UniqueId, lvlId);
-                            _gdbClient.Relate(lvlId, modelId, Model.MEPEdgeTypes.IS_IN, edgeProps);
+                            _gdbClient.Relate(lvlId, modelId, Model.MEPEdgeTypes.IS_IN.ToString(), edgeProps);
                         }
                         else
                         {
                             lvlId = levels[lvl.UniqueId];
                         }
 
-                        _gdbClient.Relate(atid, lvlId, Model.MEPEdgeTypes.IS_ON, exprops);
+                        _gdbClient.Relate(atid, lvlId, Model.MEPEdgeTypes.IS_ON.ToString(), exprops);
 
                     }
 
@@ -196,7 +197,7 @@ namespace BuildingGraph.Integrations.Revit
                 }
 
 
-                _gdbClient.Relate(nid1, nid2, mepEdge.AsNodeEdge.EdgeType, edPArams);
+                _gdbClient.Relate(nid1, nid2, mepEdge.AsNodeEdge.EdgeType.ToString(), edPArams);
             }
 
 
@@ -215,9 +216,9 @@ namespace BuildingGraph.Integrations.Revit
 
                 var emprops = MEPGraphUtils.GetNodePropsWithElementProps(tselmNode, syselm);
                 var tselmId = _gdbClient.Push(tselmNode, emprops);
-                _gdbClient.Relate(sysNodeId, tselmId, Model.MEPEdgeTypes.REALIZED_BY, null);
+                _gdbClient.Relate(sysNodeId, tselmId, Model.MEPEdgeTypes.REALIZED_BY.ToString(), null);
                 var edgeProps = MEPGraphUtils.GetEdgeProps(syselm);
-                _gdbClient.Relate(tselmId, seid, Model.MEPEdgeTypes.IS_IN, edgeProps);
+                _gdbClient.Relate(tselmId, seid, Model.MEPEdgeTypes.IS_IN.ToString(), edgeProps);
 
 
                 var stypeId = syselm.GetTypeId();
@@ -239,15 +240,15 @@ namespace BuildingGraph.Integrations.Revit
                         var tsprops2 = MEPGraphUtils.GetNodePropsWithElementProps(tsNode, typeElm);
                         var sysTypeelmId = _gdbClient.Push(sysTypeelmNode, tsprops2);
 
-                        _gdbClient.Relate(tsId, sysTypeelmId, Model.MEPEdgeTypes.REALIZED_BY, null);
-                        _gdbClient.Relate(tselmId, seid, Model.MEPEdgeTypes.IS_IN, stypeedgeProps);
+                        _gdbClient.Relate(tsId, sysTypeelmId, Model.MEPEdgeTypes.REALIZED_BY.ToString(), null);
+                        _gdbClient.Relate(tselmId, seid, Model.MEPEdgeTypes.IS_IN.ToString(), stypeedgeProps);
                     }
                     else
                     {
                         tsId = types[typeElm.UniqueId];
                     }
 
-                    _gdbClient.Relate(sysNodeId, tsId, Model.MEPEdgeTypes.IS_OF, null);
+                    _gdbClient.Relate(sysNodeId, tsId, Model.MEPEdgeTypes.IS_OF.ToString(), null);
 
                 }
 
@@ -260,7 +261,7 @@ namespace BuildingGraph.Integrations.Revit
                     }
 
                     var rid = track[snd];
-                    _gdbClient.Relate(rid, sysNodeId, Model.MEPEdgeTypes.ABSTRACTED_BY, null);
+                    _gdbClient.Relate(rid, sysNodeId, Model.MEPEdgeTypes.ABSTRACTED_BY.ToString(), null);
                 }
 
             }
