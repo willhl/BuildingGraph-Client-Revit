@@ -31,7 +31,7 @@ public static class Mutations
         if (result != null)
         {
             node.intPendingNode = result;
-            node.Id = result.TempId;
+            node.Id = result.Id;
             node.WasCommited = result.WasCommited;
         }
     

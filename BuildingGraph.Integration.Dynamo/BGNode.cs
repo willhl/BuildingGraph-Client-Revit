@@ -9,7 +9,7 @@ public class BGNode
     {
         intPendingNode = pendingNode;
         Name = pendingNode.NodeName;
-        Id = pendingNode.TempId;
+        Id = pendingNode.Id;
         WasCommited = pendingNode.WasCommited;
     }
 
