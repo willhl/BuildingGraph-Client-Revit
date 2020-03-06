@@ -8,7 +8,7 @@ using HLApps.Revit.Utils;
 using HLApps.Revit.Geometry;
 using HLApps.Revit.Geometry.Octree;
 using Model = BuildingGraph.Client.Model;
-using BuildingGraph.Integrations.Revit;
+using BuildingGraph.Integration.Revit.Geometry;
 
 namespace BuildingGraph.Integrations.Revit.Parsers
 {
@@ -79,7 +79,7 @@ namespace BuildingGraph.Integrations.Revit.Parsers
 
             //var spbbhl = new HLBoundingBoxXYZ(spbb);
             //spbbhl.Size = spbbhl.Size + new XYZ(2, 2, 4);
-
+            
 
             //get faces
             var uvdensity = 0.75;
@@ -429,24 +429,27 @@ namespace BuildingGraph.Integrations.Revit.Parsers
                             {
                                 if (selm != null && (selm.Name.ToLower().Contains("exterior") || selm is Autodesk.Revit.DB.Opening || selm.Name.ToLower().Contains("window") || selm is Autodesk.Revit.DB.RoofBase))
                                 {
-                                    if (outsideNode == null) outsideNode = new MEPRevitNode("Outside", "Boundary", "OutsideBoundary", new Model.Environment());
+                                    if (outsideNode == null) outsideNode = new MEPRevitNode("Outside", "External", "Outside", new Model.Environment());
                                     spNode = outsideNode;
                                 }
                                 else if (selm != null && (selm.Name.ToLower().Contains("floor") || selm is Autodesk.Revit.DB.Floor))
                                 {
 
-                                    if (groundNode == null) groundNode = new MEPRevitNode("Ground", "Boundary", "GroundBoundary", new Model.Environment());
+                                    if (groundNode == null) groundNode = new MEPRevitNode("Ground", "External", "Ground", new Model.Environment());
                                     spNode = groundNode;
                                 }
                                 else
                                 {
-                                    spNode = new MEPRevitNode("Void", "Boundary", "OtherBoundary", new Model.VoidVolume());
+                                    spNode = new MEPRevitNode("Void", "External", "Void", new Model.VoidVolume());
                                     continue; //ignore void boundaries for now
                                 }
                             }                            
 
 
                             var sectionN = graph.NewSection(selm, Model.MEPEdgeTypes.IS_ON);
+                            sectionN.AsAbstractNode.Label = "Surface";
+                            sectionN.AsElementNode.Label = "Surface";
+                            
 
                             if (selm == null)
                             {
@@ -456,21 +459,20 @@ namespace BuildingGraph.Integrations.Revit.Parsers
                                 cl.AsNodeEdge.ExtendedProperties.Add("rvid", intermediateElemGroup.Key);
                             }
 
-                            sectionN.AsAbstractNode.Name = "Surface";
+                       
                             var edgesf = graph.AddConnection(srcNode, sectionN, MEPPathConnectionType.Analytical, Model.MEPEdgeTypes.BOUNDED_BY);
                             
                             //total up intersecting area
                             var sampleIntersect = orgElmGroup.First();
                             
-
                             edgesf.SetWeight("Area", apporxIntersect);
-                            //edgesf.SetWeight("Direction", new HoareLea.MEPGraph.Model.MEPPoint(direction.X, direction.Y, direction.Z));
-                            edgesf.SetWeight("DirectionX", direction.X);
-                            edgesf.SetWeight("DirectionY", direction.Y);
-                            edgesf.SetWeight("DirectionZ", direction.Z);
-                            edgesf.SetWeight("SubFaceType", (int)sampleIntersect.SubFaceType);
+                            edgesf.SetWeight("Direction", new Model.Types.Point3D(direction.X, direction.Y, direction.Z));
+                            edgesf.SetWeight("SubFaceType", sampleIntersect.SubFaceType.ToString());
                             
-                            /*
+                            sectionN.AsAbstractNode.ExtendedProperties.Add("Area", apporxIntersect);
+                            sectionN.AsAbstractNode.ExtendedProperties.Add("SubFaceType", sampleIntersect.SubFaceType.ToString());
+
+                            
                             HLBoundingBoxXYZ bb = new HLBoundingBoxXYZ();
                             foreach (var et in orgElmGroup)
                             {
@@ -479,27 +481,22 @@ namespace BuildingGraph.Integrations.Revit.Parsers
                                     bb.ExpandToContain(et.HittingXYZ);
                                 }
                             }
+
                             if (!bb.IsInvalid)
                             {
                                 sectionN.BoundingBox = bb;
                                 var avgCenterPoint = bb.MidPoint;
                                 var size = bb.Size;
-                                sectionN.SetProperty("OriginX", avgCenterPoint.X);
-                                sectionN.SetProperty("OriginY", avgCenterPoint.Y);
-                                sectionN.SetProperty("OriginZ", avgCenterPoint.Z);
-                                sectionN.SetProperty("SizeX", size.X);
-                                sectionN.SetProperty("SizeY", size.Y);
-                                sectionN.SetProperty("SizeZ", size.Z);
-                            }*/
+                                sectionN.SetProperty("Center", avgCenterPoint.ToBuildingGraph());
+                                sectionN.SetProperty("Size", size.ToBuildingGraph());
+                            }
 
                             
 
                             var edgest = graph.AddConnection(sectionN, spNode, MEPPathConnectionType.Analytical, Model.MEPEdgeTypes.BOUNDED_BY);
-                            var directionn = direction;//.Negate();
+                            var directionn = direction.Negate();
                             edgest.SetWeight("Area", apporxIntersect);
-                            edgest.SetWeight("DirectionX", directionn.X);
-                            edgest.SetWeight("DirectionY", directionn.Y);
-                            edgest.SetWeight("DirectionZ", directionn.Z);
+                            edgest.SetWeight("Direction", directionn.ToBuildingGraph());
                             edgest.SetWeight("SubFaceType", (int)sampleIntersect.SubFaceType);
                         }
 

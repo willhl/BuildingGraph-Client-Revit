@@ -24,7 +24,7 @@ namespace HLApps.Revit.Geometry
         /// Minimum and maximum X, Y and Z values.
         /// </summary>
         double xmin, ymin, zmin, xmax, ymax, zmax;
-
+        bool isInitilised = false;
         /// <summary>
         /// Initialise to infinite values.
         /// </summary>
@@ -32,6 +32,7 @@ namespace HLApps.Revit.Geometry
         {
             xmin = ymin = zmin = double.MaxValue;
             xmax = ymax = zmax = double.MinValue;
+            isInitilised = false;
         }
 
         public HLBoundingBoxXYZ(XYZ min, XYZ max, bool wibble)
@@ -41,6 +42,7 @@ namespace HLApps.Revit.Geometry
 
             ExpandToContain(min);
             ExpandToContain(max);
+
         }
 
         /// <summary>
@@ -56,6 +58,8 @@ namespace HLApps.Revit.Geometry
 
             zmin = rvBox.Min.Z;
             zmax = rvBox.Max.Z;
+
+            isInitilised = true;
         }
 
         /// <summary>
@@ -71,6 +75,8 @@ namespace HLApps.Revit.Geometry
             xmax = center.X + (size.X * 0.5);
             ymax = center.Y + (size.Y * 0.5);
             zmax = center.Z + (size.Z * 0.5);
+
+            isInitilised = true;
         }
 
         /// <summary>
@@ -106,6 +112,8 @@ namespace HLApps.Revit.Geometry
             if (p.X > xmax) { xmax = p.X; }
             if (p.Y > ymax) { ymax = p.Y; }
             if (p.Z > zmax) { zmax = p.Z; }
+
+            isInitilised = true;
         }
 
         public bool Intersects(HLBoundingBoxXYZ r2)
@@ -260,7 +268,7 @@ namespace HLApps.Revit.Geometry
         {
             get
             {
-                return double.IsInfinity(xmax) || double.IsInfinity(xmin) || double.IsInfinity(ymax) || double.IsInfinity(ymin) || double.IsInfinity(zmax) || double.IsInfinity(zmin) || double.IsNaN(xmax) || double.IsNaN(xmin) || double.IsNaN(ymax) || double.IsNaN(ymin) || double.IsNaN(zmax) || double.IsNaN(zmin);
+                return !isInitilised || double.IsInfinity(xmax) || double.IsInfinity(xmin) || double.IsInfinity(ymax) || double.IsInfinity(ymin) || double.IsInfinity(zmax) || double.IsInfinity(zmin) || double.IsNaN(xmax) || double.IsNaN(xmin) || double.IsNaN(ymax) || double.IsNaN(ymin) || double.IsNaN(zmax) || double.IsNaN(zmin);
             }
         }
 

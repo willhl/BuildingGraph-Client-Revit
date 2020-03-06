@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 using HLApps.Revit.Utils;
 using BuildingGraph.Client;
 using BuildingGraph.Client.Neo4j;
 using Model = BuildingGraph.Client.Model;
+using Nito.AsyncEx;
 
 namespace BuildingGraph.Integrations.Revit
 {
@@ -34,9 +36,6 @@ namespace BuildingGraph.Integrations.Revit
             var rootparams = MEPGraphUtils.GetNodePropsWithElementProps(rootModelNode, rootDoc.ProjectInformation);
             var seid = _gdbClient.Push(rootModelNode, rootparams);
             models.Add(rootModelIdent, seid);
-
-            var exprops = new Dictionary<string, object>();
-            exprops.Add("test", 1);
 
             //add the nodes
             foreach (var mepNode in mepGraph.Nodes)
@@ -129,14 +128,14 @@ namespace BuildingGraph.Integrations.Revit
                             var tsprops2 = MEPGraphUtils.GetNodePropsWithElementProps(tsNode, typeElm);
                             var tselmId = _gdbClient.Push(tselmNode, tsprops2);
 
-                            _gdbClient.Relate(tsId, tselmId, Model.MEPEdgeTypes.REALIZED_BY.ToString(), exprops);
+                            _gdbClient.Relate(tsId, tselmId, Model.MEPEdgeTypes.REALIZED_BY.ToString(), null);
                             _gdbClient.Relate(tselmId, modelId, Model.MEPEdgeTypes.IS_IN.ToString(), edgeProps);
                         }
                         else
                         {
                             tsId = types[typeElm.UniqueId];
                         }
-                        _gdbClient.Relate(atid, tsId, Model.MEPEdgeTypes.IS_OF.ToString(), exprops);
+                        _gdbClient.Relate(atid, tsId, Model.MEPEdgeTypes.IS_OF.ToString(), null);
 
                     }
 
@@ -160,7 +159,7 @@ namespace BuildingGraph.Integrations.Revit
                             lvlId = levels[lvl.UniqueId];
                         }
 
-                        _gdbClient.Relate(atid, lvlId, Model.MEPEdgeTypes.IS_ON.ToString(), exprops);
+                        _gdbClient.Relate(atid, lvlId, Model.MEPEdgeTypes.IS_ON.ToString(), null);
 
                     }
 
@@ -266,7 +265,8 @@ namespace BuildingGraph.Integrations.Revit
 
             }
 
-            _gdbClient.Commit();
+            Task.Run(() => AsyncContext.Run(() => _gdbClient.CommitAsync()));
+  
 
 
         }

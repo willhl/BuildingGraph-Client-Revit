@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Geometry\Convert.cs" />
     <Compile Include="Graph\IMEPGraphWriter.cs" />
     <Compile Include="Graph\introspection\EnumUtils.cs" />
     <Compile Include="Graph\MEPGraphWriterGraphQL.cs" />
@@ -109,7 +110,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Fakes Include="Fakes\RevitAPI.fakes" />
     <None Include="packages.config" />
     <None Include="RevitToGraphQLMappings.json" />
   </ItemGroup>

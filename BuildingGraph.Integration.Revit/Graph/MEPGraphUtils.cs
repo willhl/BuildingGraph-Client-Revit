@@ -2,11 +2,12 @@
 using System;
 using System.Linq;
 using Autodesk.Revit.DB;
+
+using BuildingGraph.Client;
 using BuildingGraph.Client.Model;
 using BuildingGraph.Client.Introspection;
-using BuildingGraph.Client;
+using BuildingGraph.Integration.Revit.Geometry;
 using HLApps.Revit.Parameters;
-
 
 namespace BuildingGraph.Integrations.Revit
 {
@@ -47,9 +48,7 @@ namespace BuildingGraph.Integrations.Revit
             {
                 var lpt = (elm.Location as LocationPoint);
                 var insPt = lpt.Point;
-                if (!elmParms.ContainsKey("LocationX")) elmParms.Add("LocationX", insPt.X);
-                if (!elmParms.ContainsKey("LocationY")) elmParms.Add("LocationY", insPt.Y);
-                if (!elmParms.ContainsKey("LocationZ")) elmParms.Add("LocationZ", insPt.Z);
+                if (!elmParms.ContainsKey("Location")) elmParms.Add("Location", insPt.ToBuildingGraph());
                 //if (!elmParms.ContainsKey("LocationRotation")) elmParms.Add("LocationRotation", lpt.Rotation);
             }
             else if (elm != null && elm.Location is LocationCurve)
@@ -57,14 +56,10 @@ namespace BuildingGraph.Integrations.Revit
                 //just start and end points for now
                 var asCurve = (elm.Location as LocationCurve).Curve;
                 var insPt = asCurve.GetEndPoint(0);
-                if (!elmParms.ContainsKey("LocationX")) elmParms.Add("LocationX", insPt.X);
-                if (!elmParms.ContainsKey("LocationY")) elmParms.Add("LocationY", insPt.Y);
-                if (!elmParms.ContainsKey("LocationZ")) elmParms.Add("LocationZ", insPt.Z);
+                if (!elmParms.ContainsKey("Location")) elmParms.Add("Location", insPt.ToBuildingGraph());
 
                 var endPt = asCurve.GetEndPoint(1);
-                if (!elmParms.ContainsKey("LocationEndX")) elmParms.Add("LocationEndX", endPt.X);
-                if (!elmParms.ContainsKey("LocationEndY")) elmParms.Add("LocationEndY", endPt.Y);
-                if (!elmParms.ContainsKey("LocationEndZ")) elmParms.Add("LocationEndZ", endPt.Z);
+                if (!elmParms.ContainsKey("LocationEnd")) elmParms.Add("LocationEnd", endPt.ToBuildingGraph());
 
                 var length = asCurve.Length;
                 if (!elmParms.ContainsKey("length")) elmParms.Add("Length", length);
