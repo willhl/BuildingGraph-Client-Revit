@@ -18,13 +18,14 @@ namespace BuildingGraph.Integrations.Revit
     public class MEPRevitNode
     {
       
-        public MEPRevitNode()
+        public MEPRevitNode(string name)
         {
+            _name = name;
             Connections = new HashSet<MEPRevitEdge>();
             OrginTransform = Transform.Identity;
         }
 
-        public MEPRevitNode(string name, string category, string sectionType, gmdl.Node analyticalNode) : this()
+        public MEPRevitNode(string name, string category, string sectionType, gmdl.Node analyticalNode) : this(name)
         {
             _name = name;
             _node = analyticalNode;
@@ -35,14 +36,14 @@ namespace BuildingGraph.Integrations.Revit
         }
 
 
-        public MEPRevitNode(int orgId) : this()
+        public MEPRevitNode(string name, int orgId) : this(name)
         {
             _ordId = orgId;
             Connections = new HashSet<MEPRevitEdge>();
 
         }
         
-        public MEPRevitNode(Element elm) : this()
+        public MEPRevitNode(Element elm) : this(string.Empty)
         {
             if (elm == null) return;
 

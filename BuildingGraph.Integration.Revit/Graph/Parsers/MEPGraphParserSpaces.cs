@@ -91,6 +91,7 @@ namespace BuildingGraph.Integrations.Revit.Parsers
 
             //get all the faces in the geometry
             var spfaces = spgeo.Faces.OfType<Face>().ToList();
+            var spCenter = spgeo.ComputeCentroid();
             foreach (var gface in spfaces)
             {
 
@@ -382,6 +383,8 @@ namespace BuildingGraph.Integrations.Revit.Parsers
 
             //var ec = new elmComparer();
             var srcNode = graph.AddElement(space);
+            srcNode.AsAbstractNode.ExtendedProperties.Add("Center", spCenter.ToBuildingGraph());
+            srcNode.AsElementNode.ExtendedProperties.Add("Center", spCenter.ToBuildingGraph());
             double minIncluedArea = 4;
             VectorBucketiser vbw = new VectorBucketiser(8, 5);
 
@@ -453,7 +456,7 @@ namespace BuildingGraph.Integrations.Revit.Parsers
 
                             if (selm == null)
                             {
-                                var emptyBondary = new MEPRevitNode();
+                                var emptyBondary = new MEPRevitNode("OpenBoundary");
                                 emptyBondary.AsAbstractNode.Name = "OpenBoundary";
                                 var cl = graph.AddConnection(emptyBondary, sectionN, MEPPathConnectionType.SectionOf, Model.MEPEdgeTypes.IS_ON);
                                 cl.AsNodeEdge.ExtendedProperties.Add("rvid", intermediateElemGroup.Key);
@@ -466,7 +469,7 @@ namespace BuildingGraph.Integrations.Revit.Parsers
                             var sampleIntersect = orgElmGroup.First();
                             
                             edgesf.SetWeight("Area", apporxIntersect);
-                            edgesf.SetWeight("Direction", new Model.Types.Point3D(direction.X, direction.Y, direction.Z));
+                            edgesf.SetWeight("Faceing", new Model.Types.Point3D(direction.X, direction.Y, direction.Z));
                             edgesf.SetWeight("SubFaceType", sampleIntersect.SubFaceType.ToString());
                             
                             sectionN.AsAbstractNode.ExtendedProperties.Add("Area", apporxIntersect);
@@ -487,8 +490,8 @@ namespace BuildingGraph.Integrations.Revit.Parsers
                                 sectionN.BoundingBox = bb;
                                 var avgCenterPoint = bb.MidPoint;
                                 var size = bb.Size;
-                                sectionN.SetProperty("Center", avgCenterPoint.ToBuildingGraph());
-                                sectionN.SetProperty("Size", size.ToBuildingGraph());
+                                sectionN.AsAbstractNode.ExtendedProperties.Add("Center", avgCenterPoint.ToBuildingGraph());
+                                sectionN.AsAbstractNode.ExtendedProperties.Add("Size", size.ToBuildingGraph());
                             }
 
                             
@@ -496,7 +499,7 @@ namespace BuildingGraph.Integrations.Revit.Parsers
                             var edgest = graph.AddConnection(sectionN, spNode, MEPPathConnectionType.Analytical, Model.MEPEdgeTypes.BOUNDED_BY);
                             var directionn = direction.Negate();
                             edgest.SetWeight("Area", apporxIntersect);
-                            edgest.SetWeight("Direction", directionn.ToBuildingGraph());
+                            edgest.SetWeight("Faceing", directionn.ToBuildingGraph());
                             edgest.SetWeight("SubFaceType", (int)sampleIntersect.SubFaceType);
                         }
 
@@ -572,8 +575,6 @@ namespace BuildingGraph.Integrations.Revit.Parsers
         public void FinalizeGraph(MEPRevitGraphWriter writer)
         {
             //remove duplicate paths
-            
-
         }
 
     }

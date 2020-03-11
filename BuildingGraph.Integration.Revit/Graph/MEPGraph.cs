@@ -73,7 +73,7 @@ namespace BuildingGraph.Integrations.Revit
         /// <returns></returns>
         public MEPRevitNode NewSection(Element elm, gmdl.MEPEdgeTypes edgeType)
         {
-            var sectionNode = new MEPRevitNode();
+            var sectionNode = new MEPRevitNode("Generic");
             if (elm != null)
             {
                 var intNode = AddElement(elm);
@@ -84,14 +84,6 @@ namespace BuildingGraph.Integrations.Revit
 
         }
 
-        public MEPRevitNode NewSection(string name)
-        {
-            var sectionNode = new MEPRevitNode();
-            sectionNode.AsAbstractNode.Name = name;
-            sectionNode.AsElementNode.Name = name;
-            return sectionNode; ;
-
-        }
 
         /// <summary>
         /// Add a connection between two nodes
