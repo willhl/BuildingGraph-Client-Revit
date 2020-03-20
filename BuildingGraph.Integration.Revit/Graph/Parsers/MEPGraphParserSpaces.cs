@@ -144,7 +144,7 @@ namespace BuildingGraph.Integrations.Revit.Parsers
                     if (lelm != null)
                     {
                         docIdent = DocUtils.GetDocumentIdent(lelm.Document);
-                        //get cutting elemtns if it's a wall so we can find door and windows
+                        //get cutting elements if it's a wall so we can find door and windows
                         if (lelm is HostObject)
                         {
                             var whost = lelm as HostObject;
@@ -155,6 +155,22 @@ namespace BuildingGraph.Integrations.Revit.Parsers
                                 //ignoring any link and transform for now
                                 var ehl = whost.Document.GetElement(hostElm);
                                 writer.Cache.geoCacheWriter.AddElement(ehl, true);
+                            }
+
+                            var lwall = lelm as Wall;
+                            if (lwall != null && lwall.CurtainGrid != null)
+                            {
+                                foreach (var cwpanl in lwall.CurtainGrid.GetPanelIds())
+                                {
+                                    var ehl = lwall.Document.GetElement(cwpanl);
+                                    //assume panels always from part of the host wall, so we'll exclude them
+                                    if (ehl is Panel) continue;
+                                    //but we want to include doors:
+                                    //hostElms.Add(cwpanl);
+                                    //writer.Cache.geoCacheWriter.AddElement(ehl, true);
+                                }
+
+
                             }
                         }
 
@@ -430,7 +446,15 @@ namespace BuildingGraph.Integrations.Revit.Parsers
                             }
                             else
                             {
-                                if (selm != null && (selm.Name.ToLower().Contains("exterior") || selm is Autodesk.Revit.DB.Opening || selm.Name.ToLower().Contains("window") || selm is Autodesk.Revit.DB.RoofBase))
+                                var isExternal = false;
+                                if (selm is Wall)
+                                {
+                                    var wallType = selm.Document.GetElement(selm.GetTypeId());
+                                    var functionParam = wallType.get_Parameter(BuiltInParameter.FUNCTION_PARAM);
+                                    isExternal = functionParam != null ? functionParam.AsInteger() == 1 : false;
+                                }
+
+                                if (isExternal || selm != null && (selm.Name.ToLower().Contains("exterior") || selm is Autodesk.Revit.DB.Opening || selm.Name.ToLower().Contains("window") || selm is Autodesk.Revit.DB.RoofBase))
                                 {
                                     if (outsideNode == null) outsideNode = new MEPRevitNode("Outside", "External", "Outside", new Model.Environment());
                                     spNode = outsideNode;
