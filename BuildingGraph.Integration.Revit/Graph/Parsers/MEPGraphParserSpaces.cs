@@ -228,7 +228,7 @@ namespace BuildingGraph.Integrations.Revit.Parsers
 
                         var sp = sface.Evaluate(pt);
                         rayIncident.SourceXYZ = sp;
-                        var ray = Line.CreateBound(sp, sp + nv * 4);
+                        //var ray = Line.CreateBound(sp, sp + nv * 4);
                         var rayBB = new HLBoundingBoxXYZ(sp, (sp + nv * 4), true);
                         //rayBB.Size = rayBB.Size + new XYZ(0.5, 0.5, 0.5);
                         //Plane geoPlane = Plane.c(sp, sp + nv * 5, sp + nv * 5 + (mx * 0.2));
@@ -278,7 +278,7 @@ namespace BuildingGraph.Integrations.Revit.Parsers
                             bool isGeoHit = false;
                             foreach (var extSegment in nearbyCutoutElements)
                             {
-                                foreach (var extFace in extSegment.Geometry.Faces.OfType<Face>())
+                                foreach (var extFace in extSegment.Faces)
                                 {
                                     isGeoHit = getIntersect(pt, extFace, sface, maxDistance, out isRes, out double distance, nv, doc);
                                     if (isGeoHit)
@@ -301,8 +301,8 @@ namespace BuildingGraph.Integrations.Revit.Parsers
                             var isHit = getIntersect(pt, optLastHitFace, sface, maxDistance, out var isRe, out double distance, nv, doc);
                             var isRes = isRe;
                             //project point onto other face instead?
-                            var srcXYZ = sface.Evaluate(pt);
-                            var otXYZRes = optLastHitFace.Project(srcXYZ);
+                            //var srcXYZ = sface.Evaluate(pt);
+                            //var otXYZRes = optLastHitFace.Project(srcXYZ);
 
                             if (isHit)
                             {
@@ -339,13 +339,13 @@ namespace BuildingGraph.Integrations.Revit.Parsers
                         foreach (var nearSpace in nearbySpaces)
                         {
                             var isHit = false;
-                            foreach (var otFace in nearSpace.Geometry.Faces.OfType<Face>())
+                            foreach (var otFace in nearSpace.Faces)
                             {
                                 isHit = getIntersect(pt, otFace, sface, maxDistance, out var isRe, out double distance, nv, doc);
                                 var isRes = isRe;
                                 //project point onto other face instead?
-                                var srcXYZ = sface.Evaluate(pt);
-                                var otXYZRes = otFace.Project(srcXYZ);
+                                //var srcXYZ = sface.Evaluate(pt);
+                                //var otXYZRes = otFace.Project(srcXYZ);
 
                                 if (isHit)
                                 {
@@ -557,7 +557,7 @@ namespace BuildingGraph.Integrations.Revit.Parsers
         {
 
             var sp = sourceface.Evaluate(pt);
-            var ray = Line.CreateBound(sp + nv * 0.01, sp + nv * 3);
+            var ray = Line.CreateBound(new XYZ(sp.X + nv.X * 0.01, sp.Y + nv.Y * 0.01, sp.Z + nv.Z * 0.01), new XYZ(sp.X + nv.X * 3, sp.Y + nv.Y * 3, sp.Z + nv.Z * 3));
             var ir = otherFace.Intersect(ray, out var isRes);
             isRe = isRes;
             Distance = maxDistance;

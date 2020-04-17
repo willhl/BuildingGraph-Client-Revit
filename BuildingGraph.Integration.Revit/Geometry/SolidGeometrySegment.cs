@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using HLApps.Revit.Utils;
 using Autodesk.Revit.DB;
 
@@ -21,6 +23,17 @@ namespace HLApps.Revit.Geometry
         }
 
         public Solid Geometry { get; set; }
+
+        Face[] _faces;
+        public Face[] Faces
+        {
+            get
+            {
+                if (_faces == null) _faces = Geometry.Faces.OfType<Face>().ToArray();
+                return _faces;
+            }
+        }
+
         public override void Invalidate()
         {
             Geometry = null;

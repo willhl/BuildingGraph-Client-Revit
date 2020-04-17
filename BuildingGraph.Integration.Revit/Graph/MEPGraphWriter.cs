@@ -265,8 +265,10 @@ namespace BuildingGraph.Integrations.Revit
 
             }
 
-            Task.Run(() => AsyncContext.Run(() => _gdbClient.CommitAsync()));
-  
+            AsyncContext.Run(() => _gdbClient.CommitAsync());
+            //var task = Task.Run(() => AsyncContext.Run(() => _gdbClient.CommitAsync()));
+            //task.Wait();
+
 
 
         }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 
+using BuildingGraph.Client.Model.Types;
+
 namespace HLApps.Revit.Geometry
 {
     public class HLBoundingBoxXYZ // : Tuple<XYZ, XYZ>
@@ -23,7 +25,7 @@ namespace HLApps.Revit.Geometry
         /// <summary>
         /// Minimum and maximum X, Y and Z values.
         /// </summary>
-        double xmin, ymin, zmin, xmax, ymax, zmax;
+        internal double xmin, ymin, zmin, xmax, ymax, zmax;
         bool isInitilised = false;
         /// <summary>
         /// Initialise to infinite values.
@@ -79,20 +81,32 @@ namespace HLApps.Revit.Geometry
             isInitilised = true;
         }
 
+        XYZ _min;
         /// <summary>
         /// Return current lower left corner.
         /// </summary>
+
         public XYZ Min
         {
-            get { return new XYZ(xmin, ymin, zmin); }
+            get
+            {
+                if (_min == null) _min = new XYZ(xmin, ymin, zmin);
+                return _min;
+            }
         }
 
+        XYZ _max;
         /// <summary>
         /// Return current upper right corner.
         /// </summary>
         public XYZ Max
         {
-            get { return new XYZ(xmax, ymax, zmax); }
+            get
+            {
+                if (_max == null) _max = new XYZ(xmax, ymax, zmax);
+                return _max;
+            }
+ 
         }
 
         public XYZ MidPoint
@@ -114,13 +128,14 @@ namespace HLApps.Revit.Geometry
             if (p.Z > zmax) { zmax = p.Z; }
 
             isInitilised = true;
+            _min = null;
+            _max = null;
         }
 
         public bool Intersects(HLBoundingBoxXYZ r2)
         {
             var r1 = this;
-
-            return r1.Min.X <= r2.Max.X && r1.Max.X >= r2.Min.X && r1.Min.Y <= r2.Max.Y && r1.Max.Y >= r2.Min.Y && r1.Min.Z <= r2.Max.Z && r1.Max.Z >= r2.Min.Z;
+            return r1.xmin <= r2.xmax && r1.xmax >= r2.xmin && r1.ymin <= r2.ymax && r1.ymax >= r2.ymin && r1.zmin <= r2.zmax && r1.zmax >= r2.zmin;
 
         }
 

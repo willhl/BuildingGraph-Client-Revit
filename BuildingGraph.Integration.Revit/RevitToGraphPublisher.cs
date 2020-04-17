@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 using BuildingGraph.Client.Neo4j;
 
+
 namespace BuildingGraph.Integrations.Revit
 {
     public class RevitToGraphPublisher
@@ -46,15 +47,9 @@ namespace BuildingGraph.Integrations.Revit
             }
 
             MEPGraphWriter wre = new MEPGraphWriter(client);
+
             wre.Write(meGraph, _rdoc);
-            //var bc = new HLApps.Cloud.BuildingGraph.BuildingGraphClient(@"http://localhost:4001/graphql");
-            //MEPGraphWriterGraphQL gqlWrtier = new MEPGraphWriterGraphQL(bc);
-
-            //var json = System.IO.File.ReadAllText(@"C:\src\HLApps\GraphData-MEP\HLApps.Revit.Graph\RevitToGraphQLMappings.json");
-            //var bgmap = new HLApps.Cloud.BuildingGraph.Introspection.BuildingGraphMapping(json);
-
-            //gqlWrtier.Write(meGraph, bgmap, _rdoc);
-
+       
         }
     }
 }
