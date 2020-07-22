@@ -28,7 +28,7 @@ namespace BuildingGraph.Integrations.Revit
             var types = new Dictionary<string, PendingNode>();
             var levels = new Dictionary<string, PendingNode>();
 
-            var rootModelNode = new Model.RevitModel();
+            var rootModelNode = new Model.Model();
             var rootModelIdent = DocUtils.GetDocumentIdent(rootDoc);
             rootModelNode.Name = rootDoc.PathName;
             rootModelNode.ExtendedProperties.Add("Identity", rootModelIdent);
@@ -76,7 +76,7 @@ namespace BuildingGraph.Integrations.Revit
                     }
                     else
                     {
-                        var modelNode = new Model.RevitModel();
+                        var modelNode = new Model.Model();
                         modelNode.ExtendedProperties.Add("Identity", mepNode.OrginDocIdent);
                         var mparams = modelNode.GetAllProperties();
 

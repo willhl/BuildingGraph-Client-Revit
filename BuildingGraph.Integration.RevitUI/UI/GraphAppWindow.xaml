@@ -11,6 +11,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Border BorderThickness="2" BorderBrush="{StaticResource HLGrayBG}" CornerRadius="5" Margin="2,2,2,0">
             <Grid>
@@ -43,7 +44,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Label Content="Bolt Port"  Margin="2" Foreground="{StaticResource HLBlueBG}" FontWeight="Bold" />
+                    <Label Content="Port"  Margin="2" Foreground="{StaticResource HLBlueBG}" FontWeight="Bold" />
                     <TextBox Margin="2" Grid.Column="1" Text="{Binding Port}"/>
                 </Grid>
 
@@ -66,7 +67,14 @@
                     <PasswordBox Margin="2" Grid.Column="1" Name="pwBox"  />
                 </Grid>
 
-
+                <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Database Name" Grid.Row="3" Margin="2" Foreground="{StaticResource HLBlueBG}" FontWeight="Bold"/>
+                    <TextBox  Margin="2" Grid.Column="1" Text="{Binding DBName}"/>
+                </Grid>
 
             </Grid>
         </Border>

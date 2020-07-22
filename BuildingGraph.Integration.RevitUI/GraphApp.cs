@@ -1,10 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
+using BuildingGraph.Client.Kafka;
+using BuildingGraph.Client;
+using System.IO;
+using BuildingGraph.Integration.Revit.Streams;
+
 
 namespace BuildingGraph.Integrations.Revit.UIAddin
 {
@@ -13,6 +17,7 @@ namespace BuildingGraph.Integrations.Revit.UIAddin
     public class GraphApp : IExternalApplication
     {
         public static GraphApp Instance;
+
 
         public GraphApp()
         {
@@ -38,10 +43,36 @@ namespace BuildingGraph.Integrations.Revit.UIAddin
             //TODO: persist settings with local storage
             SessionSettings = new RevitToGraphPublisherSettings();
 
+            RevitEventDispatcher.Init();
+
+           
+  
+            var streamConsumer = new RevitStreamConsumer();       
+            var bc = new BuildingGraphClient(@"http://localhost:4002/graphql", null);
+            var spacesEsh = new ElementStreamHandler(RevitEventDispatcher.Current, bc);
+            streamConsumer.StreamHandlers.Add(spacesEsh);
+            streamConsumer.Start();
+
             return Result.Succeeded;
+        }
+
+        private void Kc_NewMessageArrived(StreamMessage message)
+        {
+            RevitEventDispatcher.Current.QueueAction((UIApplication app) => {
+
+
+
+
+            });
         }
 
         public System.Windows.Window GraphAppWindow { get; set; }
         public RevitToGraphPublisherSettings SessionSettings { get; private set; }
+
+
+
+
     }
+
+    //public class QucikStreamHandler
 }

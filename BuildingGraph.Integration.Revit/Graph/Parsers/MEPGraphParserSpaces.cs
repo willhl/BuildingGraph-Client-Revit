@@ -73,13 +73,13 @@ namespace BuildingGraph.Integrations.Revit.Parsers
             var doc = space.Document;
             SpatialElementGeometryCalculator sg = new SpatialElementGeometryCalculator(doc, sbopt);
             var spgets = sg.CalculateSpatialElementGeometry(space);
+           
             var spgeo = spgets.GetGeometry();
             //var spbb = spgeo.GetBoundingBox();
             var spbb = elm.get_BoundingBox(null);
-
             //var spbbhl = new HLBoundingBoxXYZ(spbb);
             //spbbhl.Size = spbbhl.Size + new XYZ(2, 2, 4);
-            
+
 
             //get faces
             var uvdensity = 0.75;
@@ -94,6 +94,7 @@ namespace BuildingGraph.Integrations.Revit.Parsers
             var spCenter = spgeo.ComputeCentroid();
             foreach (var gface in spfaces)
             {
+                //todo: get edges from spaces and store these in the graph too
 
                 //extract the faces which bound with other elements (Walls, floors, ceilings, windows etc)
                 var sfaceInfos = spgets.GetBoundaryFaceInfo(gface);
@@ -103,7 +104,7 @@ namespace BuildingGraph.Integrations.Revit.Parsers
                     var sface = sfaceInfo.GetSubface();
 
                     var elmId = sfaceInfo.SpatialBoundaryElement;
-
+                    
                     var lelm = GetElementFromLinkedElement(elmId, doc);
                     var docIdent = string.Empty;
                     //if (lelm == null) continue; //ignore this face if it doesn't resolve to a valid element
@@ -474,8 +475,8 @@ namespace BuildingGraph.Integrations.Revit.Parsers
 
 
                             var sectionN = graph.NewSection(selm, Model.MEPEdgeTypes.IS_ON);
-                            sectionN.AsAbstractNode.Label = "Surface";
-                            sectionN.AsElementNode.Label = "Surface";
+                            sectionN.AsAbstractNode.Labels.Add("Surface");
+                            sectionN.AsElementNode.Labels.Add("Surface");
                             
 
                             if (selm == null)

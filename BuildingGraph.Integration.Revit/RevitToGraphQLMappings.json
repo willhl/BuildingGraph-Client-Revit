@@ -42,7 +42,7 @@
     },
     "VoltageUnits": {
       "Kind": "ENUM",
-      "NativeType": "Autodesk.Revit.DB.DisplayUnitType, RevitAPI",
+      "NativeType": "Autodesk.Revit.DB.DisplayUnitType",
       "Mappings": {
         "V": "DUT_VOLTS",
         "mV": "DUT_MILLIVOLTS",
@@ -66,6 +66,15 @@
       "Delete": "DeleteSpace",
       "Update": "UpdateSpace",
       "Mappings": {}
+    },
+    "FanCoilUnit": {
+      "Kind": "OBJECT",
+      "NativeType": "Autodesk.Revit.DB.MechanicalEquipment",
+      "Classifications": [
+        {
+          "Classification": "Pr_70_65_03_29"
+        }
+      ]
     }
   }
 }
