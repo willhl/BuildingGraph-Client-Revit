@@ -4,7 +4,7 @@ using Autodesk.Revit.DB;
 
 namespace HLApps.Revit.Utils
 {
-    class DocUtils
+    public class DocUtils
     {
         public static string GetDocumentIdent(Document doc)
         {

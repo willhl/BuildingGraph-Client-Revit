@@ -20,7 +20,7 @@ namespace BuildingGraph.Integrations.Revit
         public bool IncludeBoundaries { get; set; }
         public bool IncludeMechanical { get; set; }
         public bool IncludeElectrical { get; set; }
-
+        public string DBName { get; set; }
         public string DBPassword { get; set; }
         public string DBUsername { get; set; }
         public string DBHost { get; set; }

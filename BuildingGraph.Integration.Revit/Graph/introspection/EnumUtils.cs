@@ -26,7 +26,7 @@ namespace BuildingGraph.Integrations.Revit.Graph.introspection
                     return DisplayUnitType.DUT_MILLIAMPERES;
             }
 
-            throw new Exception("Uknown unit type " + enumValue);
+            throw new Exception("Unknown unit type " + enumValue);
         }
 
     }

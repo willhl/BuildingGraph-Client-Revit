@@ -12,8 +12,7 @@ using Model = BuildingGraph.Client.Model;
 
 namespace BuildingGraph.Integrations.Revit.Parsers
 {
-
-
+  
     public class MEPGraphParserConnectors : IRevitGraphParser
     {
 
@@ -25,7 +24,7 @@ namespace BuildingGraph.Integrations.Revit.Parsers
         public virtual ElementFilter GetFilter()
         {
 
-            var cats = new BuiltInCategory[] { BuiltInCategory.OST_DuctCurves, BuiltInCategory.OST_PipeCurves, BuiltInCategory.OST_CableTray, BuiltInCategory.OST_DuctTerminal };
+            var cats = new BuiltInCategory[] { BuiltInCategory.OST_DuctCurves, BuiltInCategory.OST_PipeCurves, BuiltInCategory.OST_CableTray, BuiltInCategory.OST_DuctTerminal, BuiltInCategory.OST_MechanicalEquipment};
             var emcf = new ElementMulticategoryFilter(cats);
             return emcf;
 

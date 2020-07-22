@@ -21,6 +21,21 @@ namespace BuildingGraph.Integrations.Revit.UIAddin.ViewModel
             _app = app;
         }
 
+
+        public string DBName
+        {
+            get
+            {
+                return _settings.DBName;
+            }
+            set
+            {
+                _settings.DBName = value;
+                NotifyPropertyChanged("DBName");
+            }
+        }
+
+
         public string Username
         {
             get
@@ -141,7 +156,7 @@ namespace BuildingGraph.Integrations.Revit.UIAddin.ViewModel
 
         void PublishToGraph()
         {
-            var client = new Neo4jClient(new Uri(string.Format("bolt://{0}:{1}", Host, Port)), Username, Password);
+            var client = new Neo4jClient(new Uri(string.Format("bolt://{0}:{1}", Host, Port)), Username, Password, DBName);
             _publisher.Publish(_settings, client);
             Autodesk.Revit.UI.TaskDialog.Show("Publish complete", "The current revit model has been successfully published to the graph database.");
             Close();
