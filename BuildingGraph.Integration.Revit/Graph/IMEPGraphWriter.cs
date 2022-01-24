@@ -1,7 +1,7 @@
 ﻿using Autodesk.Revit.DB;
 using System.Threading.Tasks;
 
-namespace BuildingGraph.Integrations.Revit
+namespace BuildingGraph.Integration.Revit
 {
     public interface IMEPGraphWriter
     {

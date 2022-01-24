@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 
 
-namespace BuildingGraph.Integrations.Revit
+namespace BuildingGraph.Integration.Revit
 {
 
 

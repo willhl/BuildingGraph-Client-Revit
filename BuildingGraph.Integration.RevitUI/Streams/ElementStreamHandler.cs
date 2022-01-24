@@ -1,8 +1,8 @@
 ﻿
 using Autodesk.Revit.DB;
 using BuildingGraph.Client.Kafka;
-using BuildingGraph.Integrations.Revit.UIAddin;
-using BuildingGraph.Integrations.Revit;
+using BuildingGraph.Integration.Revit.UIAddin;
+using BuildingGraph.Integration.Revit;
 using BuildingGraph.Client;
 using HLApps.Revit.Parameters;
 using System.Linq;

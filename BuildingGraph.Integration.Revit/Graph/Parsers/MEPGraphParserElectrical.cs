@@ -3,8 +3,9 @@
 using Autodesk.Revit.DB;
 using Model = BuildingGraph.Client.Model;
 
-namespace BuildingGraph.Integrations.Revit.Parsers
+namespace BuildingGraph.Integration.Revit.Parsers
 {
+
     public class MEPGraphParserElectrical : MEPGraphParserConnectors
     {
         public override bool CanParse(Element elm)
@@ -28,9 +29,15 @@ namespace BuildingGraph.Integrations.Revit.Parsers
             {
                 var fi = elm as FamilyInstance;
                 var sysElm = fi.MEPModel;
-                if (sysElm != null && sysElm.ElectricalSystems != null)
+#if REVIT2022
+                var systems = sysElm.GetElectricalSystems();
+#else
+                    var systems = sysElm.ElectricalSystems;
+#endif
+
+                if (sysElm != null && sysElm.HLGetElectricalSystems() != null)
                 {
-                    var panleSystems = sysElm.ElectricalSystems.OfType<Autodesk.Revit.DB.Electrical.ElectricalSystem>().Where(sy => sy.BaseEquipment != null && sy.BaseEquipment.Id == elm.Id);
+                    var panleSystems = sysElm.HLGetElectricalSystems().Where(sy => sy.BaseEquipment != null && sy.BaseEquipment.Id == elm.Id);
 
                     foreach (var sys in panleSystems)
                     {

@@ -2,7 +2,7 @@
 
 using HLApps.Revit.Geometry;
 
-namespace BuildingGraph.Integrations.Revit.Parsers
+namespace BuildingGraph.Integration.Revit.Parsers
 {
     public class FaceIntersectRay
     {

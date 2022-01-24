@@ -8,7 +8,7 @@ using BuildingGraph.Client.Neo4j;
 using Model = BuildingGraph.Client.Model;
 using Nito.AsyncEx;
 
-namespace BuildingGraph.Integrations.Revit
+namespace BuildingGraph.Integration.Revit
 {
     public class MEPGraphWriter : IMEPGraphWriter
     {
@@ -265,11 +265,11 @@ namespace BuildingGraph.Integrations.Revit
 
             }
 
-            AsyncContext.Run(() => _gdbClient.CommitAsync());
+            //AsyncContext.Run(() => _gdbClient.CommitAsync());
             //var task = Task.Run(() => AsyncContext.Run(() => _gdbClient.CommitAsync()));
             //task.Wait();
 
-
+             _gdbClient.CommitAsync();
 
         }
 

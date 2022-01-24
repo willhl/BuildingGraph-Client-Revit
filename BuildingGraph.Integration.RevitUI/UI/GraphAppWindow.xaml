@@ -1,7 +1,7 @@
-﻿<Window x:Class="BuildingGraph.Integrations.Revit.UIAddin.GraphAppWindow" x:ClassModifier="internal"       
+﻿<Window x:Class="BuildingGraph.Integration.Revit.UIAddin.GraphAppWindow" x:ClassModifier="internal"       
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Publish Revit model to Graph Database" Height="450"  Width="400" WindowStyle="SingleBorderWindow"  SizeToContent="Height">
+        Title="Publish Revit model to Graph Database" Height="550"  Width="400" WindowStyle="SingleBorderWindow"  SizeToContent="Height">
     <Window.Resources>
         <SolidColorBrush x:Key="HLGrayBG" Color="#FF474646" />
         <SolidColorBrush x:Key="HLBlueBG" Color="#FF1E4C87" />
@@ -98,6 +98,7 @@
                     <TextBlock Margin="20,2,2,2" TextWrapping="Wrap">Traverses all circuits, adds them to the graph and connects them up. All parameters, wires, and relationships to spaces and levels are included.</TextBlock>
                     <CheckBox Content="Enable space bounding surface area feature extraction" Margin="2,10,2,0" Foreground="{StaticResource HLBlueBG}" FontWeight="Bold" IsChecked="{Binding IncludeBoundaries}"/>
                     <TextBlock Margin="20,2,2,2" TextWrapping="Wrap">Interrogates the geometry by ray trace to find simplified bounding surfaces between spaces. Surfaces on the same element (wall/door/window) which face the same direction count as a single surface node. Warning: For large models this might take a long time.</TextBlock>
+                    <CheckBox Content="Deep geo matching" Margin="2,10,2,0" Foreground="{StaticResource HLBlueBG}" FontWeight="Bold" IsChecked="{Binding DeepGeoMatch}"/>
                 </StackPanel>
             </Grid>
         </Border>

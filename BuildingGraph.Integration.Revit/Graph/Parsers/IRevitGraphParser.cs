@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-namespace BuildingGraph.Integrations.Revit.Parsers
+namespace BuildingGraph.Integration.Revit.Parsers
 {
     public interface IRevitGraphParser
     {

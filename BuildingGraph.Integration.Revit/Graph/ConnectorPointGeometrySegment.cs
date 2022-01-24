@@ -2,7 +2,7 @@
 using Autodesk.Revit.DB;
 using HLApps.Revit.Geometry;
 
-namespace BuildingGraph.Integrations.Revit
+namespace BuildingGraph.Integration.Revit
 {
 
     public class ConnectorPointGeometrySegment : PointGeometrySegment

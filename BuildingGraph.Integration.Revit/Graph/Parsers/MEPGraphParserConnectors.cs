@@ -10,7 +10,7 @@ using HLApps.Revit.Geometry;
 using Model = BuildingGraph.Client.Model;
 
 
-namespace BuildingGraph.Integrations.Revit.Parsers
+namespace BuildingGraph.Integration.Revit.Parsers
 {
   
     public class MEPGraphParserConnectors : IRevitGraphParser
@@ -446,7 +446,15 @@ namespace BuildingGraph.Integrations.Revit.Parsers
 
                 if (fi.HasSpatialElementCalculationPoint)
                 {
-                    pos = fi.GetSpatialElementCalculationPoint();
+                    try
+                    {
+                        pos = fi.GetSpatialElementCalculationPoint();
+                    }catch (Exception ex)
+                    {
+                        //sometimes this will fail of the family supports calc point but
+                        //does not include and calc points
+                        //TODO: should at least log this error
+                    }
                 }
 
                 pos = hostTx.OfPoint(pos);
@@ -455,8 +463,17 @@ namespace BuildingGraph.Integrations.Revit.Parsers
                 //need to do phase mapping if elmDoc is not the same as the SpacesModel
                 var phase = SpacesModel.GetElement(elm.CreatedPhaseId) as Phase;
 
-                var sp = fi.Space;
-              
+                Space sp = null;
+                try
+                {
+                     sp = fi.Space;
+                }catch (Exception ex)
+                {
+                    //sometimes this will fail of family instance is in a different phase to the 
+                    //space it's in. 
+                    //TODO: should at least log this error
+                }
+
                 if (sp == null)
                 {
                     sp = SpacesModel.GetSpaceAtPoint(pos, phase);

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace BuildingGraph.Integrations.Revit.UIAddin.ViewModel
+namespace BuildingGraph.Integration.Revit.UIAddin.ViewModel
 {
 
     /// <summary>

@@ -6,24 +6,25 @@ using System.Threading.Tasks;
 
 using Autodesk.Revit.DB;
 using BuildingGraph.Client.Introspection;
+using BuildingGraph.Integration.Revit;
 
-namespace BuildingGraph.Integrations.Revit.Graph.introspection
+namespace BuildingGraph.Integration.Revit.Graph.introspection
 {
     class EnumUtils
     {
 
-        public DisplayUnitType ToRevitUnits(IBuildingGraphEnum bgEnum, string enumValue)
+        public HLDisplayUnitTypeEnum ToRevitUnits(IBuildingGraphEnum bgEnum, string enumValue)
         {
             switch (enumValue)
             {
                 case "m":
-                    return DisplayUnitType.DUT_METERS;
+                    return HLDisplayUnitTypeEnum.DUT_METERS;
                 case "mm":
-                    return DisplayUnitType.DUT_MILLIMETERS;
+                    return HLDisplayUnitTypeEnum.DUT_MILLIMETERS;
                 case "A":
-                    return DisplayUnitType.DUT_AMPERES;
+                    return HLDisplayUnitTypeEnum.DUT_AMPERES;
                 case "mA":
-                    return DisplayUnitType.DUT_MILLIAMPERES;
+                    return HLDisplayUnitTypeEnum.DUT_MILLIAMPERES;
             }
 
             throw new Exception("Unknown unit type " + enumValue);

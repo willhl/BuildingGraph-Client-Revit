@@ -7,11 +7,12 @@ using Autodesk.Revit.DB;
 using BuildingGraph.Client.Neo4j;
 
 
-namespace BuildingGraph.Integrations.Revit
+namespace BuildingGraph.Integration.Revit
 {
     public class RevitToGraphPublisher
     {
         Document _rdoc;
+        MEPGraphWriter wre;
         public RevitToGraphPublisher(Document doc)
         {
             _rdoc = doc;
@@ -42,11 +43,11 @@ namespace BuildingGraph.Integrations.Revit
             using (Transaction tx = new Transaction(_rdoc, "Build graph"))
             {
                 tx.Start("Build graph");
-                mps.Write(mecElements, geoElements, -1, true, _rdoc);
+                mps.Write(mecElements, geoElements, -1, settings.DeepGeoMatch, _rdoc);
                 tx.Commit();
             }
 
-            MEPGraphWriter wre = new MEPGraphWriter(client);
+            wre = new MEPGraphWriter(client);
 
             wre.Write(meGraph, _rdoc);
        

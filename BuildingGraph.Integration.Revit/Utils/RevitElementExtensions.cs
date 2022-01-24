@@ -5,6 +5,23 @@ using Autodesk.Revit.DB;
 
 namespace HLApps.Revit.Utils
 {
+    public static class MEPModelExtensions
+    {
+
+        public static IEnumerable<Autodesk.Revit.DB.Electrical.ElectricalSystem> hlGetElectricalSystems(this MEPModel model)
+        {
+
+#if REVIT2022
+            return model.GetElectricalSystems().OfType<Autodesk.Revit.DB.Electrical.ElectricalSystem>();
+#else
+            return sysElm.ElectricalSystems.OfType<Autodesk.Revit.DB.Electrical.ElectricalSystem>();
+#endif
+
+        }
+
+
+    }
+
     static class RevitElementExtensions
     {
 

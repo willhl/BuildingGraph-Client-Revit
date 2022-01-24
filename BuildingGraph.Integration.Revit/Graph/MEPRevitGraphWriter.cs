@@ -5,9 +5,9 @@ using Autodesk.Revit.DB;
 using HLApps.Revit.Geometry;
 using HLApps.Revit.Geometry.Octree;
 using HLApps.Revit.Utils;
-using BuildingGraph.Integrations.Revit.Parsers;
+using BuildingGraph.Integration.Revit.Parsers;
 
-namespace BuildingGraph.Integrations.Revit
+namespace BuildingGraph.Integration.Revit
 {
     public class MEPRevitGraphWriter
     {

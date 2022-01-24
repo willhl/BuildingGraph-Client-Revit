@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using Autodesk.Revit.UI;
 
-namespace BuildingGraph.Integrations.Revit.UIAddin
+namespace BuildingGraph.Integration.Revit.UIAddin
 {
 
     public interface IRevitEventDispathcer

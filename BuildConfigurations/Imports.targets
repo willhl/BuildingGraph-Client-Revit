@@ -34,7 +34,28 @@
     <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
     <Private>False</Private>
   </Reference>
+
+  <Reference Include="RevitAPI, Version=21.0.0.0, Culture=neutral, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'RV2021Debug' OR '$(Configuration)' == 'RV2021Release' OR '$(Configuration)' == 'RV2021DBDebug' OR '$(Configuration)' == 'RV2021DBRelease'">
+    <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
+    <Private>False</Private>
+  </Reference>
+
+  <Reference Include="RevitAPIUI, Version=21.0.0.0, Culture=neutral, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'RV2021Debug' OR '$(Configuration)' == 'RV2021Release'">
+    <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
+    <Private>False</Private>
+  </Reference>
+
+  <Reference Include="RevitAPI, Version=22.0.0.0, Culture=neutral, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'RV2022Debug' OR '$(Configuration)' == 'RV2022Release' OR '$(Configuration)' == 'RV2022DBDebug' OR '$(Configuration)' == 'RV2022DBRelease'">
+    <HintPath>C:\Program Files\Autodesk\Revit 2022\RevitAPI.dll</HintPath>
+    <Private>False</Private>
+  </Reference>
+
+  <Reference Include="RevitAPIUI, Version=22.0.0.0, Culture=neutral, processorArchitecture=AMD64" Condition="'$(Configuration)' == 'RV2022Debug' OR '$(Configuration)' == 'RV2022Release'">
+    <HintPath>C:\Program Files\Autodesk\Revit 2022\RevitAPIUI.dll</HintPath>
+    <Private>False</Private>
+  </Reference>
+
   
-  </ItemGroup>
+</ItemGroup>
 
 </Project>

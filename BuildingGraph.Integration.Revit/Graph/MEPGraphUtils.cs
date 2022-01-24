@@ -9,7 +9,7 @@ using BuildingGraph.Client.Introspection;
 using BuildingGraph.Integration.Revit.Geometry;
 using HLApps.Revit.Parameters;
 
-namespace BuildingGraph.Integrations.Revit
+namespace BuildingGraph.Integration.Revit
 {
     public static class MEPGraphUtils
     {
@@ -103,14 +103,46 @@ namespace BuildingGraph.Integrations.Revit
                         if (unitMapping != null && unitMapping.ValueMap.ContainsKey(fieldUnit.DefaultValue.ToString()))
                         {
                             var revitValue = unitMapping.ValueMap[defaultValue];
-                            DisplayUnitType revitUnitTypeEnum;
+                            HLDisplayUnitTypeEnum revitUnitTypeEnum;
                             if (Enum.TryParse(revitValue, out revitUnitTypeEnum))
                             {
                                 //var type = Type.GetType(unitMapping.NativeType);// "Namespace.MyClass, MyAssembly");
-                                val = UnitUtils.ConvertFromInternalUnits((double)val, revitUnitTypeEnum);
+                                val = HLUnitUtils.FromInternalUnits((double)val, revitUnitTypeEnum);
                             }
                         }
                     }
+                }
+                else
+                {
+                    //brute force parse from string to primitive type
+                    if (val is string && val != null)
+                    {
+                        var valstr = val as string;
+                        valstr = valstr.Trim().ToLower();
+
+                        if (valstr == "n/a" || valstr == "n\\a" || valstr == "uncontrolled" || valstr == "-")
+                        {
+                            val = null;
+                        } 
+                        else if (valstr == "yes")
+                        {
+                            val = true;
+                        }
+                        else if (valstr == "no")
+                        {
+                            val = false;
+                        }
+                        else if (valstr.Contains(".") && double.TryParse(valstr, out double valDub))
+                        {
+                            val = valDub;
+                        }
+                        else if (int.TryParse(valstr, out int valint))
+                        {
+                            val = valint;
+                        }
+
+                    }
+
                 }
 
                 if (!elmParms.ContainsKey(paramName))

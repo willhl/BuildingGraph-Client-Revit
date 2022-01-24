@@ -73,4 +73,51 @@
   </PropertyGroup>
 
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RV2021Debug|x64' OR '$(Configuration)|$(Platform)' == 'RV2021DBDebug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\2021\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;REVIT2012,REVIT2013,REVIT2014,REVIT2015,REVIT2016,REVIT2017,REVIT2018,REVIT2019,REVIT2020,REVIT2021</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RV2021Release|x64' OR '$(Configuration)|$(Platform)' == 'RV2021DBRelease|x64'">
+    <OutputPath>bin\x64\Release\2021\</OutputPath>
+    <DefineConstants>TRACE;REVIT2012,REVIT2013,REVIT2014,REVIT2015,REVIT2016,REVIT2017,REVIT2018,REVIT2019,REVIT2020,REVIT2021</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RV2022Debug|x64' OR '$(Configuration)|$(Platform)' == 'RV2022DBDebug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\2022\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;REVIT2012,REVIT2013,REVIT2014,REVIT2015,REVIT2016,REVIT2017,REVIT2018,REVIT2019,REVIT2020,REVIT2021,REVIT2022</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RV2022Release|x64' OR '$(Configuration)|$(Platform)' == 'RV2022DBRelease|x64'">
+    <OutputPath>bin\x64\Release\2022\</OutputPath>
+    <DefineConstants>TRACE;REVIT2012,REVIT2013,REVIT2014,REVIT2015,REVIT2016,REVIT2017,REVIT2018,REVIT2019,REVIT2020,REVIT2021,REVIT2022</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+  </PropertyGroup>
+
+  
 </Project>

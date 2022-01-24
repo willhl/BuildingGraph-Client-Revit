@@ -10,7 +10,7 @@ using System.IO;
 using BuildingGraph.Integration.Revit.Streams;
 
 
-namespace BuildingGraph.Integrations.Revit.UIAddin
+namespace BuildingGraph.Integration.Revit.UIAddin
 {
 
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]

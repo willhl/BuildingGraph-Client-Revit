@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BuildingGraph.Integrations.Revit
+namespace BuildingGraph.Integration.Revit
 {
     public class RevitToGraphPublisherSettings
     {
@@ -20,6 +20,9 @@ namespace BuildingGraph.Integrations.Revit
         public bool IncludeBoundaries { get; set; }
         public bool IncludeMechanical { get; set; }
         public bool IncludeElectrical { get; set; }
+
+        public bool DeepGeoMatch { get; set; }
+
         public string DBName { get; set; }
         public string DBPassword { get; set; }
         public string DBUsername { get; set; }

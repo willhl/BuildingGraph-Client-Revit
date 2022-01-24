@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BuildingGraph.Client.Neo4j;
 
-namespace BuildingGraph.Integrations.Revit.UIAddin.ViewModel
+namespace BuildingGraph.Integration.Revit.UIAddin.ViewModel
 {
     class GraphAppViewModel : BaseViewModel
     {
@@ -128,6 +128,19 @@ namespace BuildingGraph.Integrations.Revit.UIAddin.ViewModel
             }
         }
 
+        public bool DeepGeoMatch
+        {
+            get
+            {
+                return _settings.DeepGeoMatch;
+            }
+            set
+            {
+                _settings.DeepGeoMatch = value;
+                NotifyPropertyChanged("DeepGeoMatch");
+            }
+        }
+
         public bool CanPublish
         {
             get
@@ -154,12 +167,13 @@ namespace BuildingGraph.Integrations.Revit.UIAddin.ViewModel
             }
         }
 
+        Neo4jClient client;
         void PublishToGraph()
         {
-            var client = new Neo4jClient(new Uri(string.Format("bolt://{0}:{1}", Host, Port)), Username, Password, DBName);
+            client = new Neo4jClient(new Uri(string.Format("bolt://{0}:{1}", Host, Port)), Username, Password, DBName);
             _publisher.Publish(_settings, client);
-            Autodesk.Revit.UI.TaskDialog.Show("Publish complete", "The current revit model has been successfully published to the graph database.");
-            Close();
+            Autodesk.Revit.UI.TaskDialog.Show("Model Processed", "The model will continue to be uploaded in the background");
+           
         }
 
         void Close()

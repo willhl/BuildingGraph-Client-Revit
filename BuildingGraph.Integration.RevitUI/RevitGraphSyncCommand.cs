@@ -2,7 +2,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace BuildingGraph.Integrations.Revit.UIAddin
+namespace BuildingGraph.Integration.Revit.UIAddin
 {
 
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]

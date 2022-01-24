@@ -7,7 +7,7 @@ using HLApps.Revit.Geometry.Octree;
 using HLApps.Revit.Utils;
 using Model = BuildingGraph.Client.Model;
 
-namespace BuildingGraph.Integrations.Revit.Parsers
+namespace BuildingGraph.Integration.Revit.Parsers
 {
     public class SpaceNetworkPathScanner : IMEPGraphElementScanner
     {

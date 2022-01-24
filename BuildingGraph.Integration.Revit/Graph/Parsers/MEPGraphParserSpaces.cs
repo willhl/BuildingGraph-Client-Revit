@@ -10,7 +10,7 @@ using HLApps.Revit.Geometry.Octree;
 using Model = BuildingGraph.Client.Model;
 using BuildingGraph.Integration.Revit.Geometry;
 
-namespace BuildingGraph.Integrations.Revit.Parsers
+namespace BuildingGraph.Integration.Revit.Parsers
 {
 
 

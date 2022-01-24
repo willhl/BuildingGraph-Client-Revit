@@ -8,7 +8,7 @@ using HLApps.Revit.Utils;
 using HLApps.Revit.Geometry;
 using Model = BuildingGraph.Client.Model;
 
-namespace BuildingGraph.Integrations.Revit.Parsers
+namespace BuildingGraph.Integration.Revit.Parsers
 {
     public class MEPGraphParserIoT : MEPGraphParserConnectors
     {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using HLApps.Revit.Geometry.Octree;
 using HLApps.Revit.Geometry;
-using BuildingGraph.Integrations.Revit.Parsers;
+using BuildingGraph.Integration.Revit.Parsers;
 
-namespace BuildingGraph.Integrations.Revit
+namespace BuildingGraph.Integration.Revit
 {
 
     public class MEPPathWriteCache

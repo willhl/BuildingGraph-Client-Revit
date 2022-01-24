@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using BuildingGraph.Integrations.Revit.UIAddin.ViewModel;
+using BuildingGraph.Integration.Revit.UIAddin.ViewModel;
 
-namespace BuildingGraph.Integrations.Revit.UIAddin
+namespace BuildingGraph.Integration.Revit.UIAddin
 {
     internal partial class GraphAppWindow : Window
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel;
 
-namespace BuildingGraph.Integrations.Revit.UIAddin.ViewModel
+namespace BuildingGraph.Integration.Revit.UIAddin.ViewModel
 {
     class BaseViewModel : INotifyPropertyChanged    
     {

@@ -12,7 +12,7 @@ using gmdl = BuildingGraph.Client.Model;
 
 
 
-namespace BuildingGraph.Integrations.Revit
+namespace BuildingGraph.Integration.Revit
 {
 
     public class MEPRevitNode

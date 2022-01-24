@@ -27,6 +27,13 @@
     <PostBuildEvent>xcopy /y "*.dll" "%appdata%\Autodesk\Revit\Addins\2020\BuildingGraph\"</PostBuildEvent>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RV2021Debug|x64'">
+    <PostBuildEvent>xcopy /y "*.dll" "%appdata%\Autodesk\Revit\Addins\2021\BuildingGraph\"</PostBuildEvent>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RV2022Debug|x64'">
+    <PostBuildEvent>xcopy /y "*.dll" "%appdata%\Autodesk\Revit\Addins\2022\BuildingGraph\"</PostBuildEvent>
+  </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RV2018Debug|x64'">
     <PreBuildEvent>xcopy /y/S "$(SolutionDir)BuildingGraph.Integration.RevitUI\BuildingGraph.addin" "%appdata%\Autodesk\Revit\Addins\2018\"</PreBuildEvent>
@@ -40,7 +47,14 @@
     <PreBuildEvent>xcopy /y/S "$(SolutionDir)BuildingGraph.Integration.RevitUI\BuildingGraph.addin" "%appdata%\Autodesk\Revit\Addins\2020\"</PreBuildEvent>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RV2021Debug|x64'">
+    <PreBuildEvent>xcopy /y/S "$(SolutionDir)BuildingGraph.Integration.RevitUI\BuildingGraph.addin" "%appdata%\Autodesk\Revit\Addins\2021\"</PreBuildEvent>
+  </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RV2022Debug|x64'">
+    <PreBuildEvent>xcopy /y/S "$(SolutionDir)BuildingGraph.Integration.RevitUI\BuildingGraph.addin" "%appdata%\Autodesk\Revit\Addins\2022\"</PreBuildEvent>
+  </PropertyGroup>
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RV2018Debug|x64'">
     <StartAction>Program</StartAction>
     <StartProgram>C:\Program Files\Autodesk\Revit 2018\Revit.exe</StartProgram>
@@ -51,6 +65,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RV2020Debug|x64'">
     <StartProgram>C:\Program Files\Autodesk\Revit 2020\Revit.exe</StartProgram>
+    <StartAction>Program</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RV2021Debug|x64'">
+    <StartProgram>C:\Program Files\Autodesk\Revit 2021\Revit.exe</StartProgram>
+    <StartAction>Program</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RV2022Debug|x64'">
+    <StartProgram>C:\Program Files\Autodesk\Revit 2022\Revit.exe</StartProgram>
     <StartAction>Program</StartAction>
   </PropertyGroup>
   

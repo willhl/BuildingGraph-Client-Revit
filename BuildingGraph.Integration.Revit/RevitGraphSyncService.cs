@@ -9,7 +9,7 @@ using Nito.AsyncEx;
 using BuildingGraph.Client;
 using HLApps.Revit.Parameters;
 
-namespace BuildingGraph.Integrations.Revit
+namespace BuildingGraph.Integration.Revit
 {
 
     public class RevitGraphSyncService
@@ -18,54 +18,62 @@ namespace BuildingGraph.Integrations.Revit
 
         public void Sync(Document doc)
         {
-            var bc = new BuildingGraphClient(@"http://localhost:4001/graphql", null);
+ 
+            var client = new BuildingGraphClient(@"https://hlbuildinggraph.azure-api.net/dev-external/graphql?subscription-key=e24f1d99266045f4b7ff2656b05d7ddb");
 
-            var query = @"{ChangeRequest (IsComplete:false){Changes{ParameterName, NewValue, ChangeSource{BIMRevitElementID}}}}";
-            var vars = new Dictionary<string, object>();
-            vars.Add("IsComplete", false);
-
-            var task = Task.Run(() => AsyncContext.Run(() => bc.ExecuteQuery(query, vars)));
-            //after a lot of issues with thread blocking... this was found to be a working interim solution.
-            //see https://msdn.microsoft.com/en-us/magazine/mt238404.aspx for explanation
-            //ideally, we wouldn't block Revit's main thread, but in most cases the query will complete very quickly.
-            //The majority of time spent is in writing the parameter values with Revit which, due to constraints of the Revit API, can only be synchronous.
-            //so not a lot to be gained by making this truly asynchronous
-
-            foreach (dynamic cr in task.Result.ChangeRequest)
-            {
-                foreach (var cg in cr.Changes)
-                {
-                    var peramName = cg.ParameterName.Value;
-                    var newValue = cg.NewValue.Value;
-                    var elmId = cg.ChangeSource.BIMRevitElementID.Value;
-
-                    var elm = doc.GetElement(new ElementId((int)elmId));
-                    if (elm == null) continue;
-                    var param = elm.GetParameters((string)peramName).FirstOrDefault();
-                    if (param == null) continue;
-                    var hlParam = new HLRevitParameter(param);
-                    hlParam.Value = newValue;
-                }
-            }
-
-            var docIdent = HLApps.Revit.Utils.DocUtils.GetDocumentIdent(doc);
-            var docVars = new Dictionary<string, object>();
-            docVars.Add("modelIdent", docIdent);
-            var modelElementsQuery = @"query($modelIdent:String){
-  Model (Identity:$modelIdent){
-    Identity
-    ModelElements {
-      UniqueId
-      AbstractElement {
-        __typename
-        Name
+            var query = @"query($identity:String) {
+  ParameterChange (filter:{IsClosed:false ModelElement_in:{Model_in:{Identity:$identity}}})
+  {
+      ParameterName
+      ModelElement{
+        UniqueId
       }
-    }
+      AbstractElement{
+        Id
+      }
+      NewValue
+      OldValue
   }
 }";
 
-            var modelElementQResult = bc.ExecuteQuery(modelElementsQuery, docVars);
-            var model = modelElementQResult.Result.Model;
+            Dictionary<string, object> vars = new Dictionary<string, object>();
+
+            var docIdent = HLApps.Revit.Utils.DocUtils.GetDocumentIdent(doc);
+            vars.Add("identity", "8764c510-57b7-44c3-bddf-266d86c26380-0000c160:C:\\Users\\reynoldsw\\Desktop\\Ventilation Pressure Drop Model\\Ventilation Pressure Drop Model.rvt");
+
+            var result = client.ExecuteQuery(query, vars);
+
+
+            foreach (var parameterChange in result.ParameterChange)
+            {
+                if (parameterChange.NewValue != null)
+                {
+
+                    var qlperamName = parameterChange.ParameterName.Value;
+                    var newValue = parameterChange.NewValue.Value;
+                    var elmId = parameterChange.ModelElement.UniqueId.Value;
+                   
+
+                    Element elm = doc.GetElement(elmId);
+                    if (elm == null) continue;
+
+
+                    foreach (var param in elm.Parameters.OfType<Parameter>())
+                    {
+                        if (param.IsReadOnly) continue;
+
+                        var hp = new HLRevitParameter(param);
+                        var paramName = Utils.GetGraphQLCompatibleFieldName(param.Definition.Name);
+
+                        if (qlperamName == paramName)
+                        {
+                            hp.Value = newValue;
+                        }
+                    }
+
+                }
+            }
+
 
         }
 

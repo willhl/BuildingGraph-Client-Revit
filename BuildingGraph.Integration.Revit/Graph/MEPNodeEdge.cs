@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using BuildingGraph.Client.Model;
 
-namespace BuildingGraph.Integrations.Revit
+namespace BuildingGraph.Integration.Revit
 {
 
     public class MEPRevitEdge

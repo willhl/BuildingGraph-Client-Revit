@@ -5,7 +5,7 @@ using BuildingGraph.Client;
 using BuildingGraph.Client.Introspection;
 using Model = BuildingGraph.Client.Model;
 
-namespace BuildingGraph.Integrations.Revit
+namespace BuildingGraph.Integration.Revit
 {
     public class MEPGraphWriterGraphQL //: IMEPGraphWriter
     {

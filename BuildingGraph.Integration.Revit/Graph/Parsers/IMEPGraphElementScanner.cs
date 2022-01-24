@@ -3,7 +3,7 @@ using Autodesk.Revit.DB;
 using HLApps.Revit.Geometry;
 using HLApps.Revit.Geometry.Octree;
 
-namespace BuildingGraph.Integrations.Revit.Parsers
+namespace BuildingGraph.Integration.Revit.Parsers
 {
     public interface IMEPGraphElementScanner
     {

@@ -2,10 +2,10 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-using BuildingGraph.Integrations.Revit.UIAddin.ViewModel;
+using BuildingGraph.Integration.Revit.UIAddin.ViewModel;
 
 
-namespace BuildingGraph.Integrations.Revit.UIAddin
+namespace BuildingGraph.Integration.Revit.UIAddin
 {
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     public class GraphAppShowCommand : IExternalCommand

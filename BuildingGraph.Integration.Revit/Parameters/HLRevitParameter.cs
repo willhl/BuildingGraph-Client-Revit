@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Autodesk.Revit.DB;
+using BuildingGraph.Integration.Revit;
 
 namespace HLApps.Revit.Parameters
 {
@@ -161,7 +162,7 @@ namespace HLApps.Revit.Parameters
 
                         }
 
-                        if (wasParsed && _revitPerameter.DisplayUnitType == DisplayUnitType.DUT_PERCENTAGE && dval > 1)
+                        if (wasParsed && _revitPerameter.HLGetDisplayUnitType() == HLDisplayUnitTypeEnum.DUT_PERCENTAGE && dval > 1)
                         {
                             dval = dval / 100;
                             _revitPerameter.Set(dval);

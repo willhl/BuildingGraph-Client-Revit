@@ -4,29 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 using Autodesk.Revit.DB;
 
 namespace BuildingGraph.Integration.Revit
 {
-    public abstract class MEPConnector
+
+
+
+
+    public class HLParameterType
     {
+       
+       private ParameterType AsParameterType;
 
-        public XYZ Origin { get; set; }
+       //HLParameterTypeEnum hlpt;
 
+
+        //UnitType ut;
+        //ForgeTypeID;
     }
 
-
-
-    public class RevitConnector : MEPConnector
-    {
-
-
-    }
-
-    public class VirtualConnector : MEPConnector
-    {
-
-
-    }
 
 }
